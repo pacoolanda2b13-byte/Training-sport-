@@ -166,14 +166,14 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 
 /* ---------- Programme ---------- */
 var PROGRAM = {
-  lun:{name:"Trapèzes, cou & avant-bras",short:"Trap/Av-b",type:"muscu",exos:[
-    {id:"shrug",n:"Shrugs barre",s:4,r:"10-12",a:"kg",b:"reps",rest:75,tip:"Monte les épaules vers les oreilles, tiens 1 s en haut."},
-    {id:"dbshrug",n:"Shrugs haltères",s:3,r:"12-15",a:"kg",b:"reps",rest:60},
-    {id:"neck",n:"Cou en isométrie",s:3,r:"15 s × 4 côtés",a:null,b:"sec",rest:45,tip:"Main contre la tête : avant, arrière, gauche, droite. Sans forcer. Cou et trapèzes encaissent les coups."},
-    {id:"wristcurl",n:"Curl poignets",s:3,r:"15",a:"kg",b:"reps",rest:45,tip:"Avant-bras posés sur le banc, seuls les poignets bougent."},
-    {id:"revwrist",n:"Extensions de poignets",s:3,r:"15",a:"kg",b:"reps",rest:45,tip:"Protège tes poignets à l'impact."},
-    {id:"revcurl",n:"Curl prise inversée",s:3,r:"10-12",a:"kg",b:"reps",rest:60},
-    {id:"hang",n:"Suspension à la barre",s:3,r:"max",a:null,b:"sec",rest:60,tip:"Pour la force de préhension."}
+  lun:{name:"Épaules & biceps",short:"Épaules",type:"muscu",exos:[
+    {id:"ohp",n:"Développé militaire",s:4,r:"6-8",a:"kg",b:"reps",rest:120},
+    {id:"landmine",n:"Landmine press en rotation",s:3,r:"6 / bras",a:"kg",b:"reps",rest:75,tip:"Tourne le buste et pousse sur la jambe arrière, comme un direct."},
+    {id:"lateral",n:"Élévations latérales",s:4,r:"12",a:"kg",b:"reps",rest:60},
+    {id:"reardelt",n:"Oiseau",s:3,r:"15",a:"kg",b:"reps",rest:60},
+    {id:"curl",n:"Curl barre",s:3,r:"8-10",a:"kg",b:"reps",rest:75},
+    {id:"hammer",n:"Curl marteau",s:3,r:"10",a:"kg",b:"reps",rest:60,tip:"Renforce avant-bras et poignets."},
+    {id:"inclinecurl",n:"Curl incliné",s:3,r:"12",a:"kg",b:"reps",rest:60}
   ]},
   mar:{name:"Pecs & triceps",short:"Pecs",type:"muscu",exos:[
     {id:"bench",n:"Développé couché",s:4,r:"6-8",a:"kg",b:"reps",rest:120},
@@ -191,14 +191,14 @@ var PROGRAM = {
     {id:"dbrow",n:"Rowing haltère",s:3,r:"10 / bras",a:"kg",b:"reps",rest:75},
     {id:"facepull",n:"Face pull",s:3,r:"15",a:"kg",b:"reps",rest:60,tip:"Protège tes épaules pour la boxe."}
   ]},
-  jeu:{name:"Épaules & biceps",short:"Épaules",type:"muscu",exos:[
-    {id:"ohp",n:"Développé militaire",s:4,r:"6-8",a:"kg",b:"reps",rest:120},
-    {id:"landmine",n:"Landmine press en rotation",s:3,r:"6 / bras",a:"kg",b:"reps",rest:75,tip:"Tourne le buste et pousse sur la jambe arrière, comme un direct."},
-    {id:"lateral",n:"Élévations latérales",s:4,r:"12",a:"kg",b:"reps",rest:60},
-    {id:"reardelt",n:"Oiseau",s:3,r:"15",a:"kg",b:"reps",rest:60},
-    {id:"curl",n:"Curl barre",s:3,r:"8-10",a:"kg",b:"reps",rest:75},
-    {id:"hammer",n:"Curl marteau",s:3,r:"10",a:"kg",b:"reps",rest:60,tip:"Renforce avant-bras et poignets."},
-    {id:"inclinecurl",n:"Curl incliné",s:3,r:"12",a:"kg",b:"reps",rest:60}
+  jeu:{name:"Trapèzes, cou & avant-bras",short:"Trap/Av-b",type:"muscu",exos:[
+    {id:"shrug",n:"Shrugs barre",s:4,r:"10-12",a:"kg",b:"reps",rest:75,tip:"Monte les épaules vers les oreilles, tiens 1 s en haut."},
+    {id:"dbshrug",n:"Shrugs haltères",s:3,r:"12-15",a:"kg",b:"reps",rest:60},
+    {id:"neck",n:"Cou en isométrie",s:3,r:"15 s × 4 côtés",a:null,b:"sec",rest:45,tip:"Main contre la tête : avant, arrière, gauche, droite. Sans forcer. Cou et trapèzes encaissent les coups."},
+    {id:"wristcurl",n:"Curl poignets",s:3,r:"15",a:"kg",b:"reps",rest:45,tip:"Avant-bras posés sur le banc, seuls les poignets bougent."},
+    {id:"revwrist",n:"Extensions de poignets",s:3,r:"15",a:"kg",b:"reps",rest:45,tip:"Protège tes poignets à l'impact."},
+    {id:"revcurl",n:"Curl prise inversée",s:3,r:"10-12",a:"kg",b:"reps",rest:60},
+    {id:"hang",n:"Suspension à la barre",s:3,r:"max",a:null,b:"sec",rest:60,tip:"Pour la force de préhension."}
   ]},
   ven:{name:"Abdos & explosivité",short:"Explo",type:"muscu",exos:[
     {id:"mbrot",n:"Lancers médecine-ball en rotation",s:4,r:"5 / côté",a:"kg",b:"reps",rest:90,tip:"Lance de toutes tes forces, c'est le geste du crochet."},
