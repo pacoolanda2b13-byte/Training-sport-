@@ -128,8 +128,8 @@ textarea{width:100%;min-height:70px;border:1px solid var(--line);background:var(
 .test form input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 9px;font-variant-numeric:tabular-nums}
 select{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 10px;width:100%}
 .chart svg{width:100%;height:auto;display:block}
-.chart text{fill:var(--muted);font-size:12px;font-family:var(--font-body)}
-.chart .lbl{fill:var(--ink);font-weight:600;font-size:13px}
+.chart text{fill:var(--muted);font-size:17px;font-family:var(--font-body)}
+.chart .lbl{fill:var(--ink);font-weight:600;font-size:18px}
 .empty{color:var(--muted);font-size:14px;padding:18px 0;text-align:center}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .stat{background:var(--bg);border-radius:8px;padding:10px}
@@ -153,13 +153,30 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 .timer button.alt{background:transparent;color:var(--bg);border:1px solid currentColor}
 .toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:30;max-width:calc(100% - 32px)}
 .toast[hidden]{display:none}
+.goalbar{height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.goalbar span{display:block;height:100%;background:var(--good);border-radius:999px}
+.rowform,.cardioform{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.rowform .field{flex:1;min-width:120px}
+.cardioform select{flex:2;min-width:150px;width:auto}
+.cardioform .field{flex:1;min-width:90px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--accent);display:inline-block}
+.lg-line{width:16px;height:3px;background:var(--accent);display:inline-block;border-radius:2px}
+.lg-dash{width:16px;border-top:2px dashed var(--muted);display:inline-block}
+.cardio-dots{display:flex;gap:8px;align-items:center}
+.cardio-dots span{width:28px;height:28px;border-radius:50%;border:2px solid var(--line)}
+.cardio-dots span.on{background:var(--good);border-color:var(--good)}
+.cardio-dots b{font-family:var(--font-display);font-size:22px;margin-left:6px}
+.cardio-item{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:14px;border-bottom:1px solid var(--line);padding:6px 0}
+.cardio-item .del{border:0;background:transparent;color:var(--muted);font-size:13px;text-decoration:underline}
 .footnote{font-size:12px;color:var(--muted);text-align:center}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <div id="root"></div>
-<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[],"tests":[]}</script>
+<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5}}</script>
 <script id="app">
 (function(){
 "use strict";
@@ -250,7 +267,7 @@ function setsFor(exo,w){
 /* ---------- État ---------- */
 var state;
 try{ state = JSON.parse(document.getElementById("state").textContent); }catch(e){ state = {startDate:todayStr(),sessions:[],tests:[]}; }
-state.sessions = state.sessions||[]; state.tests = state.tests||[];
+state.sessions = state.sessions||[]; state.tests = state.tests||[]; state.weights = state.weights||[]; state.cardio = state.cardio||[]; state.goal = state.goal||{start:79,target:72,rate:0.5};
 var art = null, artReady = false;
 var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift"};
 var drafts = {};
@@ -271,7 +288,7 @@ function fmtN(n){ return n==null?"–":(Math.round(n*10)/10).toString().replace(
 /* Si la sauvegarde partagée n'est pas disponible, on garde une copie dans ce navigateur */
 function loadLocalFallback(){
   var raw=ls("ts-state"); if(!raw) return;
-  try{ var loc=JSON.parse(raw); if(loc && (loc.sessions||[]).length+(loc.tests||[]).length > state.sessions.length+state.tests.length) state=loc; }catch(e){}
+  try{ var loc=JSON.parse(raw); function cnt(x){return (x.sessions||[]).length+(x.tests||[]).length+(x.weights||[]).length+(x.cardio||[]).length;} if(loc && cnt(loc)>cnt(state)){ state=loc; state.weights=state.weights||[]; state.cardio=state.cardio||[]; state.goal=state.goal||{start:79,target:72,rate:0.5}; } }catch(e){}
 }
 
 function getDraft(day){
@@ -306,12 +323,13 @@ function render(){
   h+='</div><div class="phase-note">'+esc(ph.note)+'</div></header>';
 
   h+='<nav class="tabs" role="tablist">';
-  [["seance","Séance"],["progres","Progression"],["histo","Historique"]].forEach(function(t){
+  [["seance","Séance"],["poids","Poids"],["progres","Progrès"],["histo","Historique"]].forEach(function(t){
     h+='<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(ui.tab===t[0])+'">'+t[1]+'</button>';
   });
   h+='</nav>';
 
   if(ui.tab==="seance") h+=renderSession(w);
+  else if(ui.tab==="poids") h+=renderWeight();
   else if(ui.tab==="progres") h+=renderProgress();
   else h+=renderHistory();
 
@@ -451,7 +469,7 @@ function renderProgress(){
 
 function chartSVG(pts,unit){
   if(pts.length<2) return '<div class="empty">'+(pts.length?"Encore une séance avec cet exercice et ta courbe apparaît.":"Pas encore de séance enregistrée avec cet exercice.")+'</div>';
-  var W=640,H=240,L=44,R=22,T=22,B=30;
+  var W=640,H=250,L=56,R=22,T=22,B=30;
   var vs=pts.map(function(p){return p.v;}), lo=Math.min.apply(null,vs), hi=Math.max.apply(null,vs);
   if(hi===lo){ hi+=5; lo=Math.max(0,lo-5); }
   var step=niceStep((hi-lo)/4); lo=Math.floor(lo/step)*step; hi=Math.ceil(hi/step)*step;
@@ -470,6 +488,109 @@ function chartSVG(pts,unit){
 }
 function niceStep(r){ if(r<=0) return 1; var p=Math.pow(10,Math.floor(Math.log10(r))), f=r/p; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p; }
 
+
+/* ---------- Poids et cardio ---------- */
+var CARDIO_TYPES=["Vélo","Rameur","Marche rapide en pente","Footing","Corde à sauter","Autre"];
+function dayNum(ds){ return Math.round(parseDate(ds).getTime()/86400000); }
+function addDays(ds,n){ var d=parseDate(ds); d.setDate(d.getDate()+n); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function sortedWeights(){ return state.weights.slice().sort(function(a,b){return a.date<b.date?-1:1;}); }
+function avgAround(ws,ds){ /* moyenne des 7 jours qui finissent à ds */
+  var e=dayNum(ds), xs=ws.filter(function(w){ var n=dayNum(w.date); return n<=e && n>e-7; });
+  if(!xs.length) return null; return xs.reduce(function(t,w){return t+w.v;},0)/xs.length;
+}
+function expectedAt(ds){
+  var g=state.goal, weeks=(dayNum(ds)-dayNum(state.startDate))/7;
+  return Math.max(g.target, g.start-g.rate*Math.max(0,weeks));
+}
+function weekStart(ds){ var d=parseDate(ds), g=(d.getDay()+6)%7; return addDays(ds,-g); }
+function renderWeight(){
+  var g=state.goal, ws=sortedWeights(), today=todayStr();
+  var last=ws.length?ws[ws.length-1]:null, avg=last?avgAround(ws,last.date):null;
+  var cur=avg!=null?avg:g.start, lost=g.start-cur, left=Math.max(0,cur-g.target);
+  var pct=Math.max(0,Math.min(100,(lost/(g.start-g.target))*100));
+  var h='<section class="card"><div class="session-head"><h2>Poids</h2>';
+  var exp=expectedAt(last?last.date:today), diff=cur-exp;
+  if(!last) h+='<span class="pill muted">Première pesée à faire</span>';
+  else if(cur<=g.target) h+='<span class="pill good">Objectif atteint</span>';
+  else if(diff<=0.3) h+='<span class="pill good">Dans les temps</span>';
+  else h+='<span class="pill warn">'+fmtN(diff)+' kg au-dessus du rythme</span>';
+  h+='</div>';
+  h+='<div class="stats"><div class="stat"><b class="num">'+fmtN(cur)+'</b><span>Moyenne 7 jours (kg)</span></div><div class="stat"><b class="num">'+(lost>=0?"−":"+")+fmtN(Math.abs(lost))+'</b><span>Depuis '+fmtN(g.start)+' kg</span></div><div class="stat"><b class="num">'+fmtN(left)+'</b><span>Restants jusqu\'à '+fmtN(g.target)+' kg</span></div></div>';
+  h+='<div class="goalbar" aria-label="'+Math.round(pct)+' % de l\'objectif"><span style="width:'+pct.toFixed(1)+'%"></span></div>';
+  h+='<div class="hint">'+etaText(ws)+'</div>';
+  var todayW=ws.filter(function(w){return w.date===today;})[0];
+  h+='<form class="rowform" data-form="weight"><label class="field"><input id="weight-in" inputmode="decimal" placeholder="'+(last?esc(String(last.v).replace(".",",")):"79")+'" aria-label="Poids du jour en kg" value="'+(todayW?esc(String(todayW.v).replace(".",",")):"")+'"><span>kg</span></label><button class="btn small" type="submit">'+(todayW?"Corriger":"Noter")+' le poids du jour</button></form>';
+  h+='<div class="hint">Pèse-toi 2 à 3 fois par semaine, le matin à jeun. Seule la moyenne compte.</div>';
+  h+='<div class="chart">'+weightSVG(ws)+'</div>';
+  h+='<div class="legend"><span><i class="lg-dot"></i>Pesées</span><span><i class="lg-line"></i>Moyenne 7 jours</span><span><i class="lg-dash"></i>Rythme visé (−'+fmtN(g.rate)+' kg/sem.)</span></div>';
+  h+='</section>';
+
+  /* Cardio */
+  var ws0=weekStart(today), wk=state.cardio.filter(function(c){return c.date>=ws0;});
+  var mins=wk.reduce(function(t,c){return t+(c.min||0);},0);
+  h+='<section class="card"><div class="session-head"><h2>Cardio de la semaine</h2><span class="pill '+(wk.length>=2?"good":"muted")+'">'+wk.length+' / 3 séances</span></div>';
+  h+='<div class="cardio-dots">'; for(var i=0;i<3;i++) h+='<span class="'+(i<wk.length?"on":"")+'"></span>'; h+='<b class="num">'+mins+' min</b></div>';
+  h+='<div class="hint">Objectif : 2 à 3 séances de 30 à 40 min à allure facile (tu dois pouvoir parler). En plus : 8 000 à 10 000 pas par jour.</div>';
+  h+='<form class="cardioform" data-form="cardio"><select id="cardio-type" aria-label="Type de cardio">'+CARDIO_TYPES.map(function(t){return '<option>'+esc(t)+'</option>';}).join("")+'</select><label class="field"><input id="cardio-min" inputmode="numeric" placeholder="30" aria-label="Durée en minutes"><span>min</span></label><button class="btn small" type="submit">Ajouter</button></form>';
+  var recent=state.cardio.slice().sort(function(a,b){return a.date<b.date?1:-1;}).slice(0,8);
+  if(recent.length){
+    h+='<div class="hist">';
+    recent.forEach(function(c){ h+='<div class="cardio-item"><span>'+fmtDate(c.date)+' · <strong>'+esc(c.type)+'</strong> · '+c.min+' min</span><button type="button" class="del" data-act="delcardio" data-id="'+esc(c.id)+'">Supprimer</button></div>'; });
+    h+='</div>';
+  } else h+='<div class="empty">Aucune séance de cardio notée pour l\'instant.</div>';
+  h+='</section>';
+  return h;
+}
+function etaText(ws){
+  var g=state.goal;
+  var targetDate=addDays(state.startDate,Math.ceil((g.start-g.target)/g.rate*7));
+  var base='Au rythme de '+fmtN(g.rate)+' kg par semaine, tu atteins '+fmtN(g.target)+' kg vers le '+fmtDate(targetDate).replace(/\.$/,'')+'.';
+  if(ws.length<2) return base;
+  var first=ws[0], last=ws[ws.length-1], span=dayNum(last.date)-dayNum(first.date);
+  if(span<14) return base+' Ta propre estimation apparaît après 2 semaines de pesées.';
+  /* pente par régression linéaire sur les 4 dernières semaines */
+  var e=dayNum(last.date), xs=ws.filter(function(w){return dayNum(w.date)>e-28;});
+  var n=xs.length, mx=0,my=0; xs.forEach(function(w){mx+=dayNum(w.date);my+=w.v;}); mx/=n; my/=n;
+  var num_=0,den=0; xs.forEach(function(w){var dx=dayNum(w.date)-mx; num_+=dx*(w.v-my); den+=dx*dx;});
+  var slope=den?num_/den:0, perWeek=-slope*7, cur=avgAround(ws,last.date);
+  if(perWeek<=0.05) return 'Ton poids ne baisse plus sur les 4 dernières semaines. Réduis un peu ce que tu manges ou ajoute une séance de cardio.';
+  var days=Math.ceil((cur-g.target)/(perWeek/7));
+  var txt='Ces 4 dernières semaines, tu perds '+fmtN(perWeek)+' kg par semaine. À ce rythme : '+fmtN(g.target)+' kg vers le '+fmtDate(addDays(last.date,Math.max(0,days))).replace(/\.$/,'')+'.';
+  if(perWeek>1) txt+=' C\'est rapide : au-delà d\'1 kg par semaine, tu risques de perdre du muscle.';
+  return txt;
+}
+function weightSVG(ws){
+  var g=state.goal;
+  if(ws.length<1) return '<div class="empty">Note ta première pesée pour voir la courbe.</div>';
+  var W=640,H=260,L=52,R=16,T=16,B=30;
+  var d0=Math.min(dayNum(state.startDate),dayNum(ws[0].date));
+  var dEnd=Math.max(dayNum(ws[ws.length-1].date)+7, d0+28);
+  var vals=ws.map(function(w){return w.v;}).concat([g.target,expectedAt(addDays(state.startDate,0))]);
+  var lo=Math.floor(Math.min.apply(null,vals)-0.5), hi=Math.ceil(Math.max.apply(null,vals)+0.5);
+  function x(dn){ return L+(W-L-R)*((dn-d0)/(dEnd-d0)); }
+  function y(v){ return T+(H-T-B)*(1-(v-lo)/(hi-lo)); }
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Courbe de poids">';
+  var step=niceStep((hi-lo)/4);
+  for(var gv=Math.ceil(lo/step)*step; gv<=hi+1e-9; gv+=step){ s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(gv)+'" y2="'+y(gv)+'" stroke="var(--line)"/><text x="'+(L-6)+'" y="'+(y(gv)+4)+'" text-anchor="end">'+fmtN(gv)+'</text>'; }
+  /* objectif */
+  s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(g.target)+'" y2="'+y(g.target)+'" stroke="var(--good)" stroke-width="1.5"/><text class="lbl" x="'+(W-R-4)+'" y="'+(y(g.target)-6)+'" text-anchor="end" style="fill:var(--good)">Objectif '+fmtN(g.target)+' kg</text>';
+  /* rythme visé */
+  var sd=dayNum(state.startDate), ed=Math.min(dEnd, sd+Math.ceil((g.start-g.target)/g.rate*7));
+  s+='<line x1="'+x(Math.max(sd,d0))+'" y1="'+y(expectedAt(addDays(state.startDate,Math.max(0,d0-sd))))+'" x2="'+x(ed)+'" y2="'+y(expectedAt(addDays(state.startDate,ed-sd)))+'" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 5"/>';
+  /* pesées */
+  ws.forEach(function(w){ s+='<circle cx="'+x(dayNum(w.date)).toFixed(1)+'" cy="'+y(w.v).toFixed(1)+'" r="3" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5" opacity=".75"/>'; });
+  /* moyenne 7 jours */
+  if(ws.length>=2){
+    var pts=ws.map(function(w){return x(dayNum(w.date)).toFixed(1)+","+y(avgAround(ws,w.date)).toFixed(1);}).join(" ");
+    s+='<polyline points="'+pts+'" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  }
+  var lw=ws[ws.length-1], la=avgAround(ws,lw.date);
+  s+='<circle cx="'+x(dayNum(lw.date))+'" cy="'+y(la)+'" r="5" fill="var(--accent)"/>';
+  s+='<text class="lbl" x="'+(x(dayNum(lw.date))+8)+'" y="'+(y(la)-8)+'">'+fmtN(la)+' kg</text>';
+  s+='<text x="'+L+'" y="'+(H-8)+'">'+shortDate(addDays(state.startDate,d0-sd))+'</text><text x="'+(W-R)+'" y="'+(H-8)+'" text-anchor="end">'+shortDate(addDays(state.startDate,dEnd-sd))+'</text>';
+  return s+'</svg>';
+}
+
 function renderHistory(){
   var h='<section class="card"><div class="session-head"><h2>Historique</h2><span class="pill muted">'+state.sessions.length+' séance'+(state.sessions.length>1?"s":"")+'</span></div>';
   if(!state.sessions.length) h+='<div class="empty">Tes séances enregistrées apparaîtront ici.</div>';
@@ -487,7 +608,7 @@ function renderHistory(){
     h+='<div><button type="button" class="del" data-act="del" data-id="'+esc(s.id)+'">Supprimer cette séance</button></div></article>';
   });
   h+='</div></section>';
-  h+='<section class="card"><h2>Réglages</h2><label class="inline" for="start">Début du programme (semaine 1)<input type="date" id="start" value="'+esc(state.startDate)+'"></label><button type="button" class="btn ghost" data-act="start">Enregistrer la date</button></section>';
+  h+='<section class="card"><h2>Réglages</h2><label class="inline" for="start">Début du programme (semaine 1)<input type="date" id="start" value="'+esc(state.startDate)+'"></label><label class="inline" for="goal-start">Poids de départ (kg)<input id="goal-start" inputmode="decimal" value="'+esc(String(state.goal.start).replace(".",","))+'"></label><label class="inline" for="goal-target">Poids objectif (kg)<input id="goal-target" inputmode="decimal" value="'+esc(String(state.goal.target).replace(".",","))+'"></label><button type="button" class="btn ghost" data-act="start">Enregistrer les réglages</button></section>';
   return h;
 }
 
@@ -563,9 +684,18 @@ root.addEventListener("click",function(ev){
     var keep=state.sessions; state.sessions=state.sessions.filter(function(s){return s.id!==b.dataset.id;});
     persist("Séance supprimée.",function(){ state.sessions=keep; }); return;
   }
+  if(act==="delcardio"){
+    if(b.dataset.confirm!=="1"){ b.dataset.confirm="1"; b.textContent="Confirmer"; return; }
+    var keepC=state.cardio; state.cardio=state.cardio.filter(function(c){return c.id!==b.dataset.id;});
+    persist("Séance de cardio supprimée.",function(){ state.cardio=keepC; }); return;
+  }
   if(act==="start"){
     var v=document.getElementById("start").value; if(!v) return;
-    var old=state.startDate; state.startDate=v; persist("Date de début enregistrée.",function(){ state.startDate=old; }); return;
+    var gs=num(document.getElementById("goal-start").value), gt=num(document.getElementById("goal-target").value);
+    if(gs==null||gt==null||gt>=gs){ toast("Le poids objectif doit être plus bas que le poids de départ."); return; }
+    var old=state.startDate, oldG=JSON.stringify(state.goal);
+    state.startDate=v; state.goal.start=gs; state.goal.target=gt;
+    persist("Réglages enregistrés.",function(){ state.startDate=old; state.goal=JSON.parse(oldG); }); return;
   }
 });
 root.addEventListener("input",function(ev){
@@ -579,6 +709,20 @@ root.addEventListener("input",function(ev){
 root.addEventListener("change",function(ev){ if(ev.target.id==="chart-exo"){ ui.chartExo=ev.target.value; render(); } });
 root.addEventListener("submit",function(ev){
   ev.preventDefault();
+  var form=ev.target.dataset.form;
+  if(form==="weight"){
+    var wv=num(document.getElementById("weight-in").value);
+    if(wv==null||wv<30||wv>250){ toast("Entre ton poids en kg, par exemple 78,4."); return; }
+    var td=todayStr(), prev=state.weights.slice();
+    state.weights=state.weights.filter(function(w){return w.date!==td;}); state.weights.push({date:td,v:wv});
+    persist("Poids noté.",function(){ state.weights=prev; }); return;
+  }
+  if(form==="cardio"){
+    var mn=num(document.getElementById("cardio-min").value), ty=document.getElementById("cardio-type").value;
+    if(mn==null||mn<=0){ toast("Indique la durée en minutes."); return; }
+    state.cardio.push({id:Date.now().toString(36),date:todayStr(),type:ty,min:Math.round(mn)});
+    persist("Cardio ajouté.",function(){ state.cardio.pop(); }); return;
+  }
   var f=ev.target, id=f.dataset.test; if(!id) return;
   var t=TESTS.filter(function(x){return x.id===id;})[0], raw=f.querySelector("input").value.trim(), v;
   if(t.time && raw.indexOf(":")>-1){ var p=raw.split(":"); v=(+p[0])+(+p[1]||0)/60; } else v=num(raw);
