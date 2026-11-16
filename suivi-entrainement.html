@@ -166,7 +166,16 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 
 /* ---------- Programme ---------- */
 var PROGRAM = {
-  lun:{name:"Pecs & triceps",short:"Pecs",type:"muscu",exos:[
+  lun:{name:"Jambes",short:"Jambes",type:"muscu",exos:[
+    {id:"boxjump",n:"Box jumps",s:4,r:"4",a:"cm",b:"reps",rest:90,tip:"Au début, frais. Chaque saut à fond, descends en marchant."},
+    {id:"squat",n:"Squat",s:4,r:"6-8",a:"kg",b:"reps",rest:150},
+    {id:"hipthrust",n:"Hip thrust",s:3,r:"10",a:"kg",b:"reps",rest:90,tip:"La poussée de hanche qui donne de la puissance aux coups."},
+    {id:"legpress",n:"Presse à cuisses",s:3,r:"10",a:"kg",b:"reps",rest:90},
+    {id:"bulgarian",n:"Fentes bulgares",s:3,r:"8 / jambe",a:"kg",b:"reps",rest:90},
+    {id:"legcurl",n:"Leg curl",s:3,r:"12",a:"kg",b:"reps",rest:60},
+    {id:"calf",n:"Mollets",s:4,r:"15",a:"kg",b:"reps",rest:60}
+  ]},
+  mar:{name:"Pecs & triceps",short:"Pecs",type:"muscu",exos:[
     {id:"bench",n:"Développé couché",s:4,r:"6-8",a:"kg",b:"reps",rest:120},
     {id:"incline",n:"Développé incliné haltères",s:3,r:"8-10",a:"kg",b:"reps",rest:90},
     {id:"dips",n:"Dips",s:3,r:"8-10",a:"lest",b:"reps",rest:90,tip:"Lest en kg si tu en ajoutes, sinon laisse vide."},
@@ -174,16 +183,16 @@ var PROGRAM = {
     {id:"skull",n:"Barre au front",s:3,r:"10",a:"kg",b:"reps",rest:75},
     {id:"pushdown",n:"Extensions triceps poulie",s:3,r:"12",a:"kg",b:"reps",rest:60}
   ]},
-  mar:{name:"Dos",short:"Dos",type:"muscu",exos:[
+  mer:{name:"Dos",short:"Dos",type:"muscu",exos:[
+    {id:"deadlift",n:"Soulevé de terre",s:4,r:"5",a:"kg",b:"reps",rest:180,tip:"En premier, dos gainé, barre collée aux jambes. Ne va jamais à l'échec."},
     {id:"pullup",n:"Tractions",s:4,r:"max",a:"lest",b:"reps",rest:120},
-    {id:"row",n:"Rowing barre",s:4,r:"8",a:"kg",b:"reps",rest:90},
+    {id:"row",n:"Rowing barre",s:3,r:"8",a:"kg",b:"reps",rest:90},
     {id:"latpull",n:"Tirage vertical",s:3,r:"10",a:"kg",b:"reps",rest:75},
     {id:"dbrow",n:"Rowing haltère",s:3,r:"10 / bras",a:"kg",b:"reps",rest:75},
     {id:"facepull",n:"Face pull",s:3,r:"15",a:"kg",b:"reps",rest:60,tip:"Protège tes épaules pour la boxe."},
-    {id:"shrug",n:"Shrugs",s:3,r:"12",a:"kg",b:"reps",rest:60},
     {id:"neck",n:"Cou en isométrie",s:2,r:"15 s × 4 côtés",a:null,b:"sec",rest:45,tip:"Main contre la tête : avant, arrière, gauche, droite. Sans forcer."}
   ]},
-  mer:{name:"Épaules & biceps",short:"Épaules",type:"muscu",exos:[
+  jeu:{name:"Épaules & biceps",short:"Épaules",type:"muscu",exos:[
     {id:"ohp",n:"Développé militaire",s:4,r:"6-8",a:"kg",b:"reps",rest:120},
     {id:"landmine",n:"Landmine press en rotation",s:3,r:"6 / bras",a:"kg",b:"reps",rest:75,tip:"Tourne le buste et pousse sur la jambe arrière, comme un direct."},
     {id:"lateral",n:"Élévations latérales",s:4,r:"12",a:"kg",b:"reps",rest:60},
@@ -191,15 +200,6 @@ var PROGRAM = {
     {id:"curl",n:"Curl barre",s:3,r:"8-10",a:"kg",b:"reps",rest:75},
     {id:"hammer",n:"Curl marteau",s:3,r:"10",a:"kg",b:"reps",rest:60,tip:"Renforce avant-bras et poignets."},
     {id:"inclinecurl",n:"Curl incliné",s:3,r:"12",a:"kg",b:"reps",rest:60}
-  ]},
-  jeu:{name:"Jambes",short:"Jambes",type:"muscu",exos:[
-    {id:"boxjump",n:"Box jumps",s:4,r:"4",a:"cm",b:"reps",rest:90,tip:"Au début, frais. Chaque saut à fond, descends en marchant."},
-    {id:"squat",n:"Squat",s:4,r:"6-8",a:"kg",b:"reps",rest:150},
-    {id:"rdl",n:"Soulevé de terre roumain",s:3,r:"8",a:"kg",b:"reps",rest:120},
-    {id:"legpress",n:"Presse à cuisses",s:3,r:"10",a:"kg",b:"reps",rest:90},
-    {id:"bulgarian",n:"Fentes bulgares",s:3,r:"8 / jambe",a:"kg",b:"reps",rest:90},
-    {id:"legcurl",n:"Leg curl",s:3,r:"12",a:"kg",b:"reps",rest:60},
-    {id:"calf",n:"Mollets",s:4,r:"15",a:"kg",b:"reps",rest:60}
   ]},
   ven:{name:"Abdos & explosivité",short:"Explo",type:"muscu",exos:[
     {id:"mbrot",n:"Lancers médecine-ball en rotation",s:4,r:"5 / côté",a:"kg",b:"reps",rest:90,tip:"Lance de toutes tes forces, c'est le geste du crochet."},
@@ -224,7 +224,7 @@ var DAY_FULL = {lun:"Lundi",mar:"Mardi",mer:"Mercredi",jeu:"Jeudi",ven:"Vendredi
 
 var TESTS = [
   {id:"squat",n:"Squat × 5",unit:"kg",min:75,good:100,auto:"squat",autoMinReps:5},
-  {id:"deadlift",n:"Soulevé de terre × 5",unit:"kg",min:95,good:120},
+  {id:"deadlift",n:"Soulevé de terre × 5",unit:"kg",min:95,good:120,auto:"deadlift",autoMinReps:5},
   {id:"bench",n:"Développé couché × 5",unit:"kg",min:60,good:75,auto:"bench",autoMinReps:5},
   {id:"pullup",n:"Tractions strictes",unit:"reps",min:6,good:12,auto:"pullup",autoReps:true},
   {id:"pushup",n:"Pompes d'affilée",unit:"reps",min:30,good:45},
@@ -343,7 +343,7 @@ function renderSession(w){
   if(new Date().getDay()===0) h+='<div class="banner">Aujourd\'hui c\'est dimanche : repos. Tu peux quand même consulter tes séances.</div>';
 
   if(day.type==="muscu"){
-    if(ui.day==="ven"||ui.day==="jeu"){ if(w<=3) h+='<div class="banner">Semaines de reprise : sauts et lancers à 70 % de ton intensité, pour habituer les tendons.</div>'; }
+    if(ui.day==="ven"||ui.day==="lun"){ if(w<=3) h+='<div class="banner">Semaines de reprise : sauts et lancers à 70 % de ton intensité, pour habituer les tendons.</div>'; }
     day.exos.forEach(function(exo){
       var n=setsFor(exo,w), last=lastFor(exo.id), ds=d.sets[exo.id]||[];
       h+='<div class="exo" data-exo="'+exo.id+'"><div class="exo-head"><h3>'+esc(exo.n)+'</h3><span class="target num">'+n+' × '+esc(exo.r)+'</span></div>';
@@ -422,7 +422,7 @@ function renderProgress(){
   var lv=TESTS.map(function(t){return levelOf(t,testValue(t).v);});
   var okMin=lv.filter(function(x){return x>=1;}).length;
   h+='<span class="pill '+(okMin===TESTS.length?"good":"muted")+'">'+okMin+' / '+TESTS.length+' atteints</span></div>';
-  h+='<div class="hint">Note tes tests en semaines 1, 4, 8 et 12. Squat, développé couché et tractions se remplissent aussi tout seuls avec tes séances.</div><div class="grid2">';
+  h+='<div class="hint">Note tes tests en semaines 1, 4, 8 et 12. Squat, soulevé de terre, développé couché et tractions se remplissent aussi tout seuls avec tes séances.</div><div class="grid2">';
   TESTS.forEach(function(t,i){
     var tv=testValue(t), l=lv[i];
     var pill=l===2?'<span class="pill good">Bon niveau</span>':(l===1?'<span class="pill warn">Minimum</span>':'<span class="pill muted">À atteindre</span>');
