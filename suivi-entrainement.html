@@ -176,13 +176,14 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 .rename-btns{display:flex;gap:6px;flex-wrap:wrap}
 .btn.dark{background:var(--ink);color:var(--bg)}
 .swap{font-family:var(--font-body);font-size:11px;vertical-align:middle;padding:2px 8px}
+.hist-actions{display:flex;gap:16px;flex-wrap:wrap}
 .footnote{font-size:12px;color:var(--muted);text-align:center}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <div id="root"></div>
-<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwkchhne","date":"2026-11-17","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]}}],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5}}</script>
+<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwke3dp4","date":"2026-11-16","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]},"names":{"reardelt":"Oiseau poulie","curl":"Curl barre machine"}}],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5},"renames":{}}</script>
 <script id="app">
 (function(){
 "use strict";
@@ -275,7 +276,7 @@ var state;
 try{ state = JSON.parse(document.getElementById("state").textContent); }catch(e){ state = {startDate:todayStr(),sessions:[],tests:[]}; }
 state.sessions = state.sessions||[]; state.tests = state.tests||[]; state.weights = state.weights||[]; state.cardio = state.cardio||[]; state.goal = state.goal||{start:79,target:72,rate:0.5}; state.renames = state.renames||{};
 var art = null, artReady = false;
-var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift", editing:null};
+var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift", editing:null, editDate:null};
 var drafts = {};
 var timer = {left:0,id:null};
 
@@ -309,6 +310,11 @@ function saveDraft(day){ ls("ts-draft-"+day, JSON.stringify(drafts[day])); }
 function baseName(exo){ return state.renames[exo.id]||exo.n; }
 function nameNow(exo,d){ return (d&&d.names&&d.names[exo.id])||baseName(exo); }
 function nameIn(s,exo){ return (s.names&&s.names[exo.id])||exo.n; }
+function defaultDateFor(day){ /* le dernier jour de la semaine correspondant, aujourd'hui compris */
+  var t=todayStr(), dow=new Date().getDay(), idx=DAY_ORDER.indexOf(day)+1;
+  return addDays(t,-((dow-idx+7)%7));
+}
+function sessionDate(day){ var d=getDraft(day); return d.date||defaultDateFor(day); }
 function lastFor(exoId){
   for(var i=state.sessions.length-1;i>=0;i--){ var s=state.sessions[i]; if(s.sets&&s.sets[exoId]&&s.sets[exoId].length) return s; }
   return null;
@@ -407,6 +413,9 @@ function renderSession(w){
     });
   }
   h+='<label class="inline" for="note">Ressenti, douleurs, remarques<textarea id="note" data-f="note" placeholder="Ex. : épaule droite un peu raide, bonne énergie">'+esc(d.note)+'</textarea></label>';
+  var sd=sessionDate(ui.day);
+  h+='<label class="inline" for="sess-date">Date de la séance<input type="date" id="sess-date" data-f="date" max="'+todayStr()+'" value="'+sd+'"></label>';
+  if(sd!==todayStr()) h+='<div class="hint">Séance enregistrée au '+fmtDate(sd)+'. Change la date si besoin.</div>';
   h+='<button type="button" class="btn" data-act="save">Terminer et enregistrer la séance</button>';
   h+='<button type="button" class="btn ghost" data-act="reset">Effacer ce brouillon</button>';
   h+='</section>';
@@ -622,7 +631,10 @@ function renderHistory(){
     h+='<article class="hist-item"><header><h3>'+fmtDate(s.date)+' · '+esc(day.name)+'</h3><span class="eyebrow num">S'+weekOf(s.date)+'</span></header>';
     h+=lines.map(function(l){return '<p>'+l+'</p>';}).join("");
     if(s.note) h+='<p><em>'+esc(s.note)+'</em></p>';
-    h+='<div><button type="button" class="del" data-act="del" data-id="'+esc(s.id)+'">Supprimer cette séance</button></div></article>';
+    if(ui.editDate===s.id){
+      h+='<div class="rename"><label class="inline" for="hd-'+esc(s.id)+'">Nouvelle date<input type="date" id="hd-'+esc(s.id)+'" max="'+todayStr()+'" value="'+s.date+'"></label><div class="rename-btns"><button type="button" class="btn small" data-act="date-save" data-id="'+esc(s.id)+'">Enregistrer</button><button type="button" class="btn ghost small" data-act="date-cancel">Annuler</button></div></div>';
+    }
+    h+='<div class="hist-actions"><button type="button" class="del" data-act="date-edit" data-id="'+esc(s.id)+'">Changer la date</button><button type="button" class="del" data-act="del" data-id="'+esc(s.id)+'">Supprimer cette séance</button></div></article>';
   });
   h+='</div></section>';
   h+='<section class="card"><h2>Réglages</h2><label class="inline" for="start">Début du programme (semaine 1)<input type="date" id="start" value="'+esc(state.startDate)+'"></label><label class="inline" for="goal-start">Poids de départ (kg)<input id="goal-start" inputmode="decimal" value="'+esc(String(state.goal.start).replace(".",","))+'"></label><label class="inline" for="goal-target">Poids objectif (kg)<input id="goal-target" inputmode="decimal" value="'+esc(String(state.goal.target).replace(".",","))+'"></label><button type="button" class="btn ghost" data-act="start">Enregistrer les réglages</button></section>';
@@ -720,6 +732,16 @@ root.addEventListener("click",function(ev){
     var keep=state.sessions; state.sessions=state.sessions.filter(function(s){return s.id!==b.dataset.id;});
     persist("Séance supprimée.",function(){ state.sessions=keep; }); return;
   }
+  if(act==="date-edit"){ ui.editDate=b.dataset.id; render(); return; }
+  if(act==="date-cancel"){ ui.editDate=null; render(); return; }
+  if(act==="date-save"){
+    var nd=(document.getElementById("hd-"+b.dataset.id)||{}).value;
+    if(!nd||nd>todayStr()){ toast("Choisis une date passée ou aujourd'hui."); return; }
+    var ss=state.sessions.filter(function(x){return x.id===b.dataset.id;})[0]; if(!ss) return;
+    var od=ss.date; ss.date=nd; ui.editDate=null;
+    state.sessions.sort(function(x,y){return x.date<y.date?-1:(x.date>y.date?1:0);});
+    persist("Date modifiée.",function(){ ss.date=od; }); return;
+  }
   if(act==="delcardio"){
     if(b.dataset.confirm!=="1"){ b.dataset.confirm="1"; b.textContent="Confirmer"; return; }
     var keepC=state.cardio; state.cardio=state.cardio.filter(function(c){return c.id!==b.dataset.id;});
@@ -738,6 +760,7 @@ root.addEventListener("input",function(ev){
   var t=ev.target, f=t.dataset&&t.dataset.f; if(!f) return;
   var d=getDraft(ui.day);
   if(f==="note"){ d.note=t.value; saveDraft(ui.day); return; }
+  if(f==="date"){ d.date=t.value||null; saveDraft(ui.day); return; }
   var row=t.closest(".set"), id=t.closest(".exo").dataset.exo, i=+row.dataset.i;
   d.sets[id]=d.sets[id]||[]; var st=d.sets[id][i]=d.sets[id][i]||{};
   st[f]=num(t.value); saveDraft(ui.day);
@@ -768,8 +791,10 @@ root.addEventListener("submit",function(ev){
 });
 
 function saveSession(){
-  var day=PROGRAM[ui.day], d=getDraft(ui.day), w=weekOf(todayStr());
-  var s={id:Date.now().toString(36),date:todayStr(),day:ui.day,note:(d.note||"").trim()};
+  var day=PROGRAM[ui.day], d=getDraft(ui.day), w=weekOf(sessionDate(ui.day));
+  var sdate=sessionDate(ui.day);
+  if(sdate>todayStr()){ toast("La date de la séance ne peut pas être dans le futur."); return; }
+  var s={id:Date.now().toString(36),date:sdate,day:ui.day,note:(d.note||"").trim()};
   if(day.type==="muscu"){
     s.sets={}; var any=false;
     day.exos.forEach(function(e){
@@ -782,7 +807,7 @@ function saveSession(){
     day.blocks.forEach(function(b){ s.rounds[b.id]=(d.rounds[b.id]||[]).slice(0,b.rounds).map(Boolean); n+=s.rounds[b.id].filter(Boolean).length; });
     if(!n){ toast("Coche au moins un round avant d'enregistrer."); return; }
   }
-  state.sessions.push(s);
+  state.sessions.push(s); state.sessions.sort(function(x,y){return x.date<y.date?-1:(x.date>y.date?1:0);});
   var backup=JSON.stringify(drafts[ui.day]), dayKey=ui.day;
   ls("ts-draft-"+dayKey,null); drafts[dayKey]={sets:{},rounds:{},note:"",names:{}};
   persist("Séance enregistrée. Bien joué !",function(){ state.sessions.pop(); drafts[dayKey]=JSON.parse(backup); ls("ts-draft-"+dayKey,backup); });
