@@ -170,13 +170,19 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 .cardio-dots b{font-family:var(--font-display);font-size:22px;margin-left:6px}
 .cardio-item{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:14px;border-bottom:1px solid var(--line);padding:6px 0}
 .cardio-item .del{border:0;background:transparent;color:var(--muted);font-size:13px;text-decoration:underline}
+.linkbtn{border:0;background:transparent;padding:0;color:var(--accent);font:inherit;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.rename{display:flex;flex-direction:column;gap:8px;background:var(--bg);border-radius:10px;padding:10px}
+.rename input{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 10px;color:var(--ink);font-size:16px}
+.rename-btns{display:flex;gap:6px;flex-wrap:wrap}
+.btn.dark{background:var(--ink);color:var(--bg)}
+.swap{font-family:var(--font-body);font-size:11px;vertical-align:middle;padding:2px 8px}
 .footnote{font-size:12px;color:var(--muted);text-align:center}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <div id="root"></div>
-<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5}}</script>
+<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwkchhne","date":"2026-11-17","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]}}],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5}}</script>
 <script id="app">
 (function(){
 "use strict";
@@ -267,9 +273,9 @@ function setsFor(exo,w){
 /* ---------- État ---------- */
 var state;
 try{ state = JSON.parse(document.getElementById("state").textContent); }catch(e){ state = {startDate:todayStr(),sessions:[],tests:[]}; }
-state.sessions = state.sessions||[]; state.tests = state.tests||[]; state.weights = state.weights||[]; state.cardio = state.cardio||[]; state.goal = state.goal||{start:79,target:72,rate:0.5};
+state.sessions = state.sessions||[]; state.tests = state.tests||[]; state.weights = state.weights||[]; state.cardio = state.cardio||[]; state.goal = state.goal||{start:79,target:72,rate:0.5}; state.renames = state.renames||{};
 var art = null, artReady = false;
-var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift"};
+var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift", editing:null};
 var drafts = {};
 var timer = {left:0,id:null};
 
@@ -288,18 +294,21 @@ function fmtN(n){ return n==null?"–":(Math.round(n*10)/10).toString().replace(
 /* Si la sauvegarde partagée n'est pas disponible, on garde une copie dans ce navigateur */
 function loadLocalFallback(){
   var raw=ls("ts-state"); if(!raw) return;
-  try{ var loc=JSON.parse(raw); function cnt(x){return (x.sessions||[]).length+(x.tests||[]).length+(x.weights||[]).length+(x.cardio||[]).length;} if(loc && cnt(loc)>cnt(state)){ state=loc; state.weights=state.weights||[]; state.cardio=state.cardio||[]; state.goal=state.goal||{start:79,target:72,rate:0.5}; } }catch(e){}
+  try{ var loc=JSON.parse(raw); function cnt(x){return (x.sessions||[]).length+(x.tests||[]).length+(x.weights||[]).length+(x.cardio||[]).length;} if(loc && cnt(loc)>cnt(state)){ state=loc; state.weights=state.weights||[]; state.cardio=state.cardio||[]; state.goal=state.goal||{start:79,target:72,rate:0.5}; state.renames=state.renames||{}; } }catch(e){}
 }
 
 function getDraft(day){
   if(drafts[day]) return drafts[day];
   var raw=ls("ts-draft-"+day), d=null;
   if(raw){ try{ d=JSON.parse(raw); }catch(e){} }
-  drafts[day]=d||{sets:{},rounds:{},note:""};
+  drafts[day]=d||{sets:{},rounds:{},note:""}; drafts[day].names=drafts[day].names||{};
   return drafts[day];
 }
 function saveDraft(day){ ls("ts-draft-"+day, JSON.stringify(drafts[day])); }
 
+function baseName(exo){ return state.renames[exo.id]||exo.n; }
+function nameNow(exo,d){ return (d&&d.names&&d.names[exo.id])||baseName(exo); }
+function nameIn(s,exo){ return (s.names&&s.names[exo.id])||exo.n; }
 function lastFor(exoId){
   for(var i=state.sessions.length-1;i>=0;i--){ var s=state.sessions[i]; if(s.sets&&s.sets[exoId]&&s.sets[exoId].length) return s; }
   return null;
@@ -362,9 +371,17 @@ function renderSession(w){
     if(ui.day==="ven"){ if(w<=3) h+='<div class="banner">Semaines de reprise : sauts et lancers à 70 % de ton intensité, pour habituer les tendons.</div>'; }
     day.exos.forEach(function(exo){
       var n=setsFor(exo,w), last=lastFor(exo.id), ds=d.sets[exo.id]||[];
-      h+='<div class="exo" data-exo="'+exo.id+'"><div class="exo-head"><h3>'+esc(exo.n)+'</h3><span class="target num">'+n+' × '+esc(exo.r)+'</span></div>';
+      var nm=nameNow(exo,d), today=!!(d.names&&d.names[exo.id]);
+      h+='<div class="exo" data-exo="'+exo.id+'"><div class="exo-head"><h3>'+esc(nm)+(today?' <span class="pill warn swap">Aujourd\'hui</span>':'')+'</h3><span class="target num">'+n+' × '+esc(exo.r)+'</span></div>';
+      if(ui.editing===exo.id){
+        h+='<div class="rename"><label class="inline" for="rename-'+exo.id+'">Nouvel exercice<input id="rename-'+exo.id+'" value="'+esc(nm)+'" placeholder="Ex. : Pec deck"></label>';
+        h+='<div class="rename-btns"><button type="button" class="btn small" data-act="rn-today">Juste aujourd\'hui</button><button type="button" class="btn small dark" data-act="rn-always">Toujours</button><button type="button" class="btn ghost small" data-act="rn-cancel">Annuler</button></div>';
+        if(nm!==exo.n) h+='<button type="button" class="linkbtn" data-act="rn-reset">Revenir à « '+esc(exo.n)+' »</button>';
+        h+='<div class="hint">« Juste aujourd\'hui » : la machine est prise, tu fais autre chose cette fois. « Toujours » : l\'exercice est remplacé pour les prochaines séances.</div></div>';
+      }
       var hint=[];
-      if(last) hint.push('Dernière fois ('+shortDate(last.date)+') : <strong>'+last.sets[exo.id].map(function(st){return esc(setStr(exo,st));}).join(", ")+'</strong>');
+      if(ui.editing!==exo.id) hint.unshift('<button type="button" class="linkbtn" data-act="rename">Changer d\'exercice</button>');
+      if(last) hint.push('Dernière fois ('+shortDate(last.date)+(nameIn(last,exo)!==nm?', '+esc(nameIn(last,exo)):'')+') : <strong>'+last.sets[exo.id].map(function(st){return esc(setStr(exo,st));}).join(", ")+'</strong>');
       if(exo.tip) hint.push(esc(exo.tip));
       hint.push('Repos '+(exo.rest>=60?Math.floor(exo.rest/60)+" min"+(exo.rest%60?" "+exo.rest%60:""):exo.rest+" s"));
       h+='<div class="hint">'+hint.join(" · ")+'</div><div class="sets">';
@@ -455,7 +472,7 @@ function renderProgress(){
   var exo=findExo(ui.chartExo), pts=seriesFor(ui.chartExo);
   h+='<section class="card"><div class="session-head"><h2>Courbe de progression</h2></div>';
   h+='<label class="inline" for="chart-exo">Exercice<select id="chart-exo">';
-  opts.forEach(function(o){ h+='<option value="'+o[1].id+'"'+(o[1].id===ui.chartExo?" selected":"")+'>'+DAY_LABEL[o[0]]+' · '+esc(o[1].n)+'</option>'; });
+  opts.forEach(function(o){ h+='<option value="'+o[1].id+'"'+(o[1].id===ui.chartExo?" selected":"")+'>'+DAY_LABEL[o[0]]+' · '+esc(baseName(o[1]))+'</option>'; });
   h+='</select></label>';
   var unit=exo.a==="kg"?"kg":(exo.b==="sec"?"s":exo.b);
   if(pts.length){
@@ -598,7 +615,7 @@ function renderHistory(){
   state.sessions.slice().reverse().forEach(function(s){
     var day=PROGRAM[s.day], lines=[];
     if(day.type==="muscu"){
-      day.exos.forEach(function(e){ if(s.sets[e.id]&&s.sets[e.id].length) lines.push('<strong>'+esc(e.n)+'</strong> '+s.sets[e.id].map(function(st){return esc(setStr(e,st));}).join(", ")); });
+      day.exos.forEach(function(e){ if(s.sets[e.id]&&s.sets[e.id].length) lines.push('<strong>'+esc(nameIn(s,e))+'</strong> '+s.sets[e.id].map(function(st){return esc(setStr(e,st));}).join(", ")); });
     } else {
       day.blocks.forEach(function(b){ var n=(s.rounds&&s.rounds[b.id]||[]).filter(Boolean).length; lines.push('<strong>'+esc(b.n)+'</strong> '+n+' / '+b.rounds+' rounds'); });
     }
@@ -675,9 +692,28 @@ root.addEventListener("click",function(ev){
     d.rounds[bid]=d.rounds[bid]||[]; d.rounds[bid][ri]=!d.rounds[bid][ri];
     b.classList.toggle("done",d.rounds[bid][ri]); b.setAttribute("aria-pressed",String(d.rounds[bid][ri])); saveDraft(ui.day); return;
   }
+  if(act&&act.indexOf("rn")===0||act==="rename"){
+    var ex=b.closest(".exo"), eid=ex&&ex.dataset.exo, eo=findExo(eid);
+    if(act==="rename"){ ui.editing=eid; render(); var inp=document.getElementById("rename-"+eid); if(inp){ inp.focus(); inp.select(); } return; }
+    if(act==="rn-cancel"){ ui.editing=null; render(); return; }
+    var val=(document.getElementById("rename-"+eid)||{}).value; val=(val||"").trim();
+    if(act==="rn-reset"){
+      delete d.names[eid]; saveDraft(ui.day); ui.editing=null;
+      if(state.renames[eid]){ var oldR=state.renames[eid]; delete state.renames[eid]; persist("Exercice d'origine remis.",function(){ state.renames[eid]=oldR; }); } else render();
+      return;
+    }
+    if(!val){ toast("Écris le nom de l'exercice."); return; }
+    if(act==="rn-today"){ if(val===baseName(eo)) delete d.names[eid]; else d.names[eid]=val; saveDraft(ui.day); ui.editing=null; render(); toast("Remplacé pour cette séance."); return; }
+    if(act==="rn-always"){
+      delete d.names[eid]; saveDraft(ui.day); ui.editing=null;
+      var prevR=state.renames[eid];
+      if(val===eo.n) delete state.renames[eid]; else state.renames[eid]=val;
+      persist("Exercice remplacé pour les prochaines séances.",function(){ if(prevR) state.renames[eid]=prevR; else delete state.renames[eid]; }); return;
+    }
+  }
   if(act==="timer-add"){ startTimer(timer.left+30); return; }
   if(act==="timer-stop"){ timer.left=0; clearInterval(timer.id); updateTimer(); return; }
-  if(act==="reset"){ drafts[ui.day]={sets:{},rounds:{},note:""}; ls("ts-draft-"+ui.day,null); render(); return; }
+  if(act==="reset"){ drafts[ui.day]={sets:{},rounds:{},note:"",names:{}}; ls("ts-draft-"+ui.day,null); render(); return; }
   if(act==="save"){ saveSession(); return; }
   if(act==="del"){
     if(b.dataset.confirm!=="1"){ b.dataset.confirm="1"; b.textContent="Confirmer la suppression"; return; }
@@ -738,7 +774,7 @@ function saveSession(){
     s.sets={}; var any=false;
     day.exos.forEach(function(e){
       var arr=(d.sets[e.id]||[]).slice(0,setsFor(e,w)).filter(function(st){return st&&st.done&&st.b!=null;}).map(function(st){ var o={b:st.b}; if(st.a!=null) o.a=st.a; return o; });
-      if(arr.length){ s.sets[e.id]=arr; any=true; }
+      if(arr.length){ s.sets[e.id]=arr; any=true; var un=nameNow(e,d); if(un!==e.n){ s.names=s.names||{}; s.names[e.id]=un; } }
     });
     if(!any){ toast("Valide au moins une série avec ✓ avant d'enregistrer."); return; }
   } else {
@@ -748,7 +784,7 @@ function saveSession(){
   }
   state.sessions.push(s);
   var backup=JSON.stringify(drafts[ui.day]), dayKey=ui.day;
-  ls("ts-draft-"+dayKey,null); drafts[dayKey]={sets:{},rounds:{},note:""};
+  ls("ts-draft-"+dayKey,null); drafts[dayKey]={sets:{},rounds:{},note:"",names:{}};
   persist("Séance enregistrée. Bien joué !",function(){ state.sessions.pop(); drafts[dayKey]=JSON.parse(backup); ls("ts-draft-"+dayKey,backup); });
 }
 
