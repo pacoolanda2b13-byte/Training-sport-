@@ -198,6 +198,11 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 .kind-cardio .tag{background:var(--good-soft);color:var(--good)}
 .kind-muscu .tag{background:var(--warn-soft);color:var(--warn)}
 .footnote{font-size:12px;color:var(--muted);text-align:center}
+.days.three{grid-template-columns:repeat(3,1fr)}
+.vid{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.rules{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.rules strong{color:var(--ink);font-weight:600}
+.tabs button{flex:1 1 auto;padding:9px 3px;letter-spacing:.01em;white-space:nowrap}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -265,6 +270,52 @@ var DAY_ORDER = ["lun","mar","mer","jeu","ven","sam"];
 var DAY_LABEL = {lun:"Lun",mar:"Mar",mer:"Mer",jeu:"Jeu",ven:"Ven",sam:"Sam"};
 var DAY_FULL = {lun:"Lundi",mar:"Mardi",mer:"Mercredi",jeu:"Jeudi",ven:"Vendredi",sam:"Samedi"};
 
+/* ---------- Programme boxe en salle (catégorie à part) ---------- */
+PROGRAM.bxa={name:"Jambes : force et puissance",short:"Jambes",type:"muscu",box:true,when:"Lundi. Jamais la veille d'un sparring, et 6 h d'écart avec la boxe le même jour.",exos:[
+  {id:"bx_boxjump",n:"Sauts sur box",bs:[4,4,4],br:["3"],a:null,b:"reps",rest:90,bt:["Saut franc, réception douce et silencieuse, tu redescends en marchant.","Saute le plus haut possible, réception silencieuse.","Si tu peux : saut avec barre hexagonale légère. Tu dois décoller franchement, sinon c'est trop lourd."],v:"https://www.youtube.com/watch?v=0BAArRu04CM"},
+  {id:"bx_tbdl",n:"Soulevé de terre barre hexagonale",bs:[4,4,3],br:["5","3","3"],a:"kg",b:"reps",rest:150,bt:["Garde 2-3 répétitions en réserve, technique parfaite.","Environ 85-90 % de ton max, 1-2 reps en réserve. 1 min après chaque série : 3 sauts sur box.","Environ 75-80 %, la barre monte le plus vite possible. 1 min après chaque série : 3 sauts sur box."],v:"https://www.youtube.com/watch?v=JmitFSuXtPo"},
+  {id:"bx_mbrot",n:"Lancers médecine-ball en rotation",bs:[4,4,4],br:["5 / côté"],a:"kg",b:"reps",rest:60,tip:"Contre le mur, de toutes tes forces, en partant des hanches : c'est le geste du crochet.",v:"https://www.youtube.com/watch?v=O3ME1cTuO7Y"},
+  {id:"bx_bulg",n:"Squat bulgare haltères",bs:[3,3,3],br:["6 / jambe"],a:"kg",b:"reps",rest:90,tip:"2-3 répétitions en réserve, jamais à l'échec."},
+  {id:"bx_rdl",n:"Soulevé de terre roumain",bs:[2,2,2],br:["6"],a:"kg",b:"reps",rest:90,tip:"Dos plat, 2-3 répétitions en réserve."},
+  {id:"bx_cph",n:"Planche de Copenhague",bs:[3,3,3],br:["20 s / côté"],a:null,b:"sec",rest:45,bt:["Genou posé sur le banc (version facile).","Pied posé sur le banc."],v:"https://www.youtube.com/watch?v=1NNqUQvMYGc"},
+  {id:"bx_neck",n:"Cou en isométrie",bs:[4,4,4],br:["15 s × 4 directions"],a:null,b:"sec",rest:20,tip:"Main contre la tête (avant, arrière, côtés) : tu pousses à 60-70 % de ta force, sans bouger.",v:"https://www.youtube.com/watch?v=DO3RtUQH9kA"}
+]};
+PROGRAM.bxb={name:"Haut du corps : force et vitesse de frappe",short:"Haut du corps",type:"muscu",box:true,when:"Mercredi. Les exercices explosifs en premier, quand tu es frais.",exos:[
+  {id:"bx_bench",n:"Développé couché",bs:[4,4,3],br:["5","3","3"],a:"kg",b:"reps",rest:150,bt:["Garde 2-3 répétitions en réserve.","Environ 85-90 % de ton max. 1 min après chaque série : 4 lancers de médecine-ball poitrine contre le mur.","Environ 75-80 %, barre explosive. 1 min après chaque série : 4 lancers poitrine contre le mur."]},
+  {id:"bx_lmpunch",n:"Landmine punch",bs:[4,4,4],br:["4 / bras"],a:"kg",b:"reps",rest:90,tip:"En garde, pousse sur la jambe arrière et tourne la hanche, comme un direct.",v:"https://www.youtube.com/watch?v=n-jjDk5N7FI"},
+  {id:"bx_pull",n:"Tractions",bs:[4,4,4],br:["4-6"],a:"lest",b:"reps",rest:120,tip:"Lest en kg quand 8 deviennent faciles, sinon laisse vide. 2 reps en réserve."},
+  {id:"bx_rot",n:"Rotations explosives élastique ou poulie",bs:[3,3,3],br:["6 / côté"],a:"kg",b:"reps",rest:60,tip:"Retour lent, rotation la plus rapide possible en partant des hanches.",v:"https://www.youtube.com/watch?v=Rbf2Fo-wdpQ"},
+  {id:"bx_row",n:"Rowing haltère",bs:[3,3,3],br:["6 / bras"],a:"kg",b:"reps",rest:90},
+  {id:"bx_facepull",n:"Face pull",bs:[2,2,2],br:["15"],a:"kg",b:"reps",rest:45,tip:"Léger : c'est pour la santé des épaules."},
+  {id:"bx_farmer",n:"Farmer walk",bs:[3,3,3],br:["30 m"],a:"kg",b:"m",rest:90}
+]};
+PROGRAM.bxc={name:"Conditionnement et gainage",short:"Cardio",type:"boxe",box:true,when:"Vendredi. Vélo ou rameur : ils fatiguent moins les jambes que la course.",blocks:[
+  {id:"bx_cond",n:"Conditionnement",u:"rounds",rounds:[4,8,5],d:["Fractionné : 4 × 4 min à environ 90 % de ta fréquence cardiaque max (tu peux dire 2-3 mots), 3 min faciles entre chaque.","Sprints : 30 s à fond, 2-3 min faciles entre chaque. 6 en semaine 5, puis 8.","Circuit en rounds de 3 min, 1 min de repos : 30 s chacun de kettlebell swings, slams, cordes ondulatoires, traîneau ou burpees, mountain climbers, shadow à fond."]},
+  {id:"bx_core",n:"Gainage",u:"tours",rounds:[2,3,3],d:["Pallof press 10 par côté, relevés de jambes suspendu 10, planche latérale 30-45 s, hollow 20-30 s."]}
+]};
+var BOX_ORDER=["bxa","bxb","bxc"];
+var BOX_LABEL={bxa:"A",bxb:"B",bxc:"C"};
+var BOX_TESTS=[
+  {id:"bx_dl3",n:"Soulevé de terre × 3",unit:"kg",auto:"bx_tbdl",autoMinReps:3},
+  {id:"bx_broad",n:"Saut en longueur sans élan",unit:"cm",hint:"Meilleur de 3 essais, réception stable."},
+  {id:"bx_mb",n:"Lancer médecine-ball en rotation",unit:"m",hint:"Toujours le même ballon (3-4 kg), meilleur de 3 par côté."}
+];
+function boxWeekOf(ds){ if(!state.boxStart) return 1; var diff=(parseDate(ds)-parseDate(state.boxStart))/86400000; return Math.max(1,Math.floor(diff/7)+1); }
+function boxBloc(w){ return w<=4?0:(w<=8?1:2); }
+function boxCount(n,w){ return (w===4||w===8)?Math.max(1,Math.ceil(n/2)):n; }
+function bxPlan(exo,w){ var i=boxBloc(w); function pick(a){ return a[Math.min(i,a.length-1)]; } return {n:boxCount(pick(exo.bs),w),r:pick(exo.br),tip:exo.bt?pick(exo.bt):exo.tip}; }
+function roundsFor(key,b,w){ return PROGRAM[key].box?boxCount(b.rounds[boxBloc(w)],w):b.rounds; }
+function curKey(){ return ui.tab==="boxe"?ui.bxDay:ui.day; }
+function boxPhase(w){
+  if(w<=3) return {name:"Force de base",cls:"",note:"Charges où tu gardes 2-3 répétitions en réserve. Apprends bien les sauts et les lancers, réceptions propres."};
+  if(w===4) return {name:"Allègement + tests",cls:"warn",note:"Moitié des séries, même intensité. Fais les tests en bas de la page."};
+  if(w<=7) return {name:"Force max",cls:"",note:"Lourd en 3 répétitions, 1-2 en réserve. Tu enchaînes série lourde puis série explosive."};
+  if(w===8) return {name:"Allègement + tests",cls:"warn",note:"Moitié des séries, même intensité. Refais les tests."};
+  if(w<=11) return {name:"Force-vitesse",cls:"",note:"Charges un peu plus légères : chaque répétition le plus vite possible."};
+  if(w===12) return {name:"Tests finaux",cls:"good",note:"Séances légères en début de semaine, tests en fin de semaine."};
+  return {name:"Programme terminé",cls:"good",note:"Les 12 semaines sont faites. Change la date de début pour relancer un cycle avec tes nouvelles charges."};
+}
+
 var TESTS = [
   {id:"deadlift",n:"Soulevé de terre × 5",unit:"kg",min:95,good:120,auto:"deadlift",autoMinReps:5},
   {id:"bench",n:"Développé couché × 5",unit:"kg",min:60,good:75,auto:"bench",autoMinReps:5},
@@ -296,7 +347,7 @@ var state;
 try{ state = JSON.parse(document.getElementById("state").textContent); }catch(e){ state = {startDate:todayStr(),sessions:[],tests:[]}; }
 state.sessions = state.sessions||[]; state.tests = state.tests||[]; state.weights = state.weights||[]; state.cardio = state.cardio||[]; state.goal = state.goal||{start:79,target:72,rate:0.5}; state.renames = state.renames||{}; state.extras = state.extras||[];
 var art = null, artReady = false;
-var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift", editing:null, editDate:null, addKind:"boxe"};
+var ui = {tab:"seance", day:defaultDay(), chartExo:"deadlift", editing:null, editDate:null, addKind:"boxe", bxDay:"bxa"};
 var drafts = {};
 var timer = {left:0,id:null};
 
@@ -331,6 +382,7 @@ function baseName(exo){ return state.renames[exo.id]||exo.n; }
 function nameNow(exo,d){ return (d&&d.names&&d.names[exo.id])||baseName(exo); }
 function nameIn(s,exo){ return (s.names&&s.names[exo.id])||exo.n; }
 function defaultDateFor(day){ /* le dernier jour de la semaine correspondant, aujourd'hui compris */
+  if(DAY_ORDER.indexOf(day)<0) return todayStr();
   var t=todayStr(), dow=new Date().getDay(), idx=DAY_ORDER.indexOf(day)+1;
   return addDays(t,-((dow-idx+7)%7));
 }
@@ -358,7 +410,7 @@ function render(){
   h+='</div><div class="phase-note">'+esc(ph.note)+'</div></header>';
 
   h+='<nav class="tabs" role="tablist">';
-  [["seance","Séance"],["ajout","Ajouter"],["poids","Poids"],["progres","Progrès"],["histo","Historique"]].forEach(function(t){
+  [["seance","Séance"],["ajout","Ajouter"],["poids","Poids"],["progres","Progrès"],["histo","Historique"],["boxe","Boxe"]].forEach(function(t){
     h+='<button role="tab" data-tab="'+t[0]+'" aria-selected="'+(ui.tab===t[0])+'">'+t[1]+'</button>';
   });
   h+='</nav>';
@@ -367,6 +419,7 @@ function render(){
   else if(ui.tab==="ajout") h+=renderAdd();
   else if(ui.tab==="poids") h+=renderWeight();
   else if(ui.tab==="progres") h+=renderProgress();
+  else if(ui.tab==="boxe") h+=renderBox();
   else h+=renderHistory();
 
   h+='<p class="footnote" id="savemode">'+(artReady?(art?"Tes séances sont enregistrées dans cette page, sur tous tes appareils.":"Sauvegarde dans ce navigateur uniquement."):"Connexion à la sauvegarde…")+'</p>';
@@ -443,6 +496,91 @@ function renderSession(w){
   return h;
 }
 
+/* ---------- Programme boxe : rendu ---------- */
+function vidLink(url){ return "<a class='vid' href='"+esc(url)+"' target='_blank' rel='noopener'>Voir la vidéo</a>"; }
+function restTxt(sec){ return "Repos "+(sec>=60?Math.floor(sec/60)+" min"+(sec%60?" "+sec%60:""):sec+" s"); }
+function boxDone(w){
+  var done={}, ws=weekStart(todayStr());
+  state.sessions.forEach(function(s){ var p=PROGRAM[s.day]; if(p&&p.box&&(state.boxStart?boxWeekOf(s.date)===w:weekStart(s.date)===ws)) done[s.day]=true; });
+  return done;
+}
+function renderBoxExos(key,w){
+  var day=PROGRAM[key], d=getDraft(key), h="";
+  if(day.type!=="muscu"){
+    day.blocks.forEach(function(b){
+      var r=d.rounds[b.id]||[], nr=roundsFor(key,b,w), desc=b.d[Math.min(boxBloc(w),b.d.length-1)];
+      h+="<div class='exo' data-block='"+b.id+"'><div class='exo-head'><h3>"+esc(b.n)+"</h3><span class='target num'>"+nr+" "+esc(b.u||"rounds")+"</span></div><div class='hint'>"+esc(desc)+"</div><div class='rounds'>";
+      for(var i=0;i<nr;i++) h+="<button type='button' class='round"+(r[i]?" done":"")+"' data-act='round' data-i='"+i+"' aria-pressed='"+(!!r[i])+"'>"+(i+1)+"</button>";
+      h+="</div></div>";
+    });
+    return h;
+  }
+  day.exos.forEach(function(exo){
+    var p=bxPlan(exo,w), last=lastFor(exo.id), ds=d.sets[exo.id]||[], nm=nameNow(exo,d), today=!!(d.names&&d.names[exo.id]);
+    h+="<div class='exo' data-exo='"+exo.id+"'><div class='exo-head'><h3>"+esc(nm)+(today?" <span class='pill warn swap'>Aujourd’hui</span>":"")+"</h3><span class='target num'>"+p.n+" × "+esc(p.r)+"</span></div>";
+    if(ui.editing===exo.id){
+      h+="<div class='rename'><label class='inline' for='rename-"+exo.id+"'>Nouvel exercice<input id='rename-"+exo.id+"' value='"+esc(nm)+"' placeholder='Ex. : presse à cuisses'></label>";
+      h+="<div class='rename-btns'><button type='button' class='btn small' data-act='rn-today'>Juste aujourd’hui</button><button type='button' class='btn small dark' data-act='rn-always'>Toujours</button><button type='button' class='btn ghost small' data-act='rn-cancel'>Annuler</button></div>";
+      if(nm!==exo.n) h+="<button type='button' class='linkbtn' data-act='rn-reset'>Revenir à « "+esc(exo.n)+" »</button>";
+      h+="</div>";
+    }
+    var hint=[];
+    if(ui.editing!==exo.id) hint.push("<button type='button' class='linkbtn' data-act='rename'>Changer d’exercice</button>");
+    if(last) hint.push("Dernière fois ("+shortDate(last.date)+") : <strong>"+last.sets[exo.id].map(function(st){return esc(setStr(exo,st));}).join(", ")+"</strong>");
+    if(p.tip) hint.push(esc(p.tip));
+    hint.push(restTxt(exo.rest));
+    if(exo.v) hint.push(vidLink(exo.v));
+    h+="<div class='hint'>"+hint.join(" · ")+"</div><div class='sets'>";
+    for(var i=0;i<p.n;i++){
+      var st=ds[i]||{}, prev=last?last.sets[exo.id]:null, ph=prev?(prev[i]||prev[prev.length-1]):{};
+      h+="<div class='set"+(exo.a?"":" one")+(st.done?" done":"")+"' data-i='"+i+"'><span class='set-n'>"+(i+1)+"</span>";
+      if(exo.a){
+        var al=exo.a==="lest"?"lest kg":exo.a;
+        h+="<label class='field'><input id='in-"+exo.id+"-"+i+"-a' inputmode='decimal' data-f='a' value='"+esc(st.a==null?"":st.a)+"' placeholder='"+esc(ph.a==null?"":ph.a)+"' aria-label='"+esc(exo.n)+" série "+(i+1)+" "+al+"'><span>"+al+"</span></label>";
+      }
+      var bl=exo.b==="sec"?"sec":exo.b;
+      h+="<label class='field'><input id='in-"+exo.id+"-"+i+"-b' inputmode='numeric' data-f='b' value='"+esc(st.b==null?"":st.b)+"' placeholder='"+esc(ph.b==null?"":ph.b)+"' aria-label='"+esc(exo.n)+" série "+(i+1)+" "+bl+"'><span>"+bl+"</span></label>";
+      h+="<button type='button' class='check' data-act='check' aria-label='Valider la série "+(i+1)+"'>✓</button></div>";
+    }
+    h+="</div></div>";
+  });
+  return h;
+}
+function renderBoxTests(){
+  var list=BOX_TESTS.concat(TESTS.filter(function(t){ return t.id==="pullup"||t.id==="run5k"; }));
+  var h="<section class='card'><div class='session-head'><h2>Tests</h2><span class='pill muted'>Semaines 1, 4, 8 et 12</span></div><div class='hint'>Le soulevé de terre se remplit tout seul avec tes séances A. Tractions et 5 km sont les mêmes que dans Progrès.</div><div class='grid2'>";
+  list.forEach(function(t){
+    var tv=testValue(t);
+    h+="<div class='test lvl0'><div class='test-top'><h3>"+esc(t.n)+"</h3></div><div class='val num'>"+fmtTest(t,tv.v)+"</div><div class='goal'>"+(tv.date?"Meilleur résultat le "+shortDate(tv.date):"Pas encore de résultat")+"</div>";
+    if(t.hint) h+="<div class='goal'>"+esc(t.hint)+"</div>";
+    h+="<form data-test='"+t.id+"'><input id='test-"+t.id+"' inputmode='decimal' placeholder='"+(t.time?"ex. 26:30":t.unit)+"' aria-label='Nouveau résultat "+esc(t.n)+"'><button class='btn small' type='submit'>Noter</button></form></div>";
+  });
+  return h+"</div></section>";
+}
+function renderBox(){
+  var w=boxWeekOf(todayStr()), ph=boxPhase(w), done=boxDone(w), key=ui.bxDay, day=PROGRAM[key];
+  var h="<section class='card'><div class='eyebrow'>Programme boxe · en salle</div>";
+  h+="<div class='top-row'><div class='week num'>Semaine "+Math.min(w,12)+" <small>/ 12</small></div><span class='pill "+ph.cls+"'>"+esc(ph.name)+"</span></div>";
+  h+="<div class='bar' aria-label='Avancement du programme boxe sur 12 semaines'>";
+  for(var i=1;i<=12;i++){ var c=state.boxStart?(i<w?"done":(i===w?"now":"")):""; if(i===4||i===8) c+=" deload"; h+="<span class='"+c+"' title='Semaine "+i+"'></span>"; }
+  h+="</div><div class='phase-note'>"+esc(ph.note)+"</div>";
+  if(!state.boxStart) h+="<div class='banner'>Choisis ta date de début tout en bas de la page : ensuite, les séries et répétitions suivent les 3 blocs toutes seules.</div>";
+  h+="</section><div class='days three'>";
+  BOX_ORDER.forEach(function(k){ h+="<button type='button' data-bx='"+k+"' aria-pressed='"+(key===k)+"'><b>Séance "+BOX_LABEL[k]+"</b><i>"+esc(PROGRAM[k].short)+"</i><span class='dot"+(done[k]?" on":"")+"'></span></button>"; });
+  h+="</div><section class='card'><div class='session-head'><h2>"+BOX_LABEL[key]+" · "+esc(day.name)+"</h2>"+(done[key]?"<span class='pill good'>Faite cette semaine</span>":"")+"</div>";
+  h+="<div class='hint'>"+esc(day.when)+"</div>";
+  h+=renderBoxExos(key,w);
+  var d=getDraft(key), sd=sessionDate(key);
+  h+="<label class='inline' for='note'>Ressenti, douleurs, remarques<textarea id='note' data-f='note' placeholder='Ex. : bonne vitesse sur les sauts, épaule un peu raide'>"+esc(d.note)+"</textarea></label>";
+  h+="<label class='inline' for='sess-date'>Date de la séance<input type='date' id='sess-date' data-f='date' max='"+todayStr()+"' value='"+sd+"'></label>";
+  if(sd!==todayStr()) h+="<div class='hint'>Séance enregistrée au "+fmtDate(sd)+". Change la date si besoin.</div>";
+  h+="<button type='button' class='btn' data-act='save'>Terminer et enregistrer la séance</button><button type='button' class='btn ghost' data-act='reset'>Effacer ce brouillon</button></section>";
+  h+=renderBoxTests();
+  h+="<section class='card'><h2>Les règles</h2><ul class='rules'><li><strong>Lourd :</strong> 3 à 5 répétitions, 1 à 2 en réserve, jamais à l'échec.</li><li><strong>Explosif :</strong> vitesse maximale, tu arrêtes dès que ça ralentit.</li><li><strong>Pas de bodybuilding :</strong> ni curls, ni élévations latérales, ni écartés.</li><li><strong>Sparring :</strong> pas de séance A la veille, et 6 h d'écart entre la boxe et la salle le même jour.</li></ul></section>";
+  h+="<section class='card'><h2>Réglages</h2><label class='inline' for='bx-start'>Début du programme boxe (semaine 1)<input type='date' id='bx-start' value='"+esc(state.boxStart||"")+"'></label><button type='button' class='btn ghost' data-act='bx-start'>Enregistrer la date</button></section>";
+  return h;
+}
+
 function bestOf(exo,sets){
   var best=null;
   sets.forEach(function(st){
@@ -498,11 +636,11 @@ function renderProgress(){
   h+='</div></section>';
 
   /* Graphique */
-  var opts=[]; DAY_ORDER.forEach(function(k){ (PROGRAM[k].exos||[]).forEach(function(e){ opts.push([k,e]); }); });
+  var opts=[]; DAY_ORDER.concat(BOX_ORDER).forEach(function(k){ (PROGRAM[k].exos||[]).forEach(function(e){ opts.push([k,e]); }); });
   var exo=findExo(ui.chartExo), pts=seriesFor(ui.chartExo);
   h+='<section class="card"><div class="session-head"><h2>Courbe de progression</h2></div>';
   h+='<label class="inline" for="chart-exo">Exercice<select id="chart-exo">';
-  opts.forEach(function(o){ h+='<option value="'+o[1].id+'"'+(o[1].id===ui.chartExo?" selected":"")+'>'+DAY_LABEL[o[0]]+' · '+esc(baseName(o[1]))+'</option>'; });
+  opts.forEach(function(o){ h+='<option value="'+o[1].id+'"'+(o[1].id===ui.chartExo?" selected":"")+'>'+(DAY_LABEL[o[0]]||"Boxe "+BOX_LABEL[o[0]])+' · '+esc(baseName(o[1]))+'</option>'; });
   h+='</select></label>';
   var unit=exo.a==="kg"?"kg":(exo.b==="sec"?"s":exo.b);
   if(pts.length){
@@ -774,18 +912,18 @@ function renderHistory(){
   acts.forEach(function(a){
     var s=a.obj, title, tag, lines=[], note=s.note;
     if(a.src==="sessions"){
-      var day=PROGRAM[s.day]; title=day.name; tag="Programme";
+      var day=PROGRAM[s.day]; title=day.name; tag=day.box?"Programme boxe":"Programme";
       if(day.type==="muscu"){
         day.exos.forEach(function(e){ if(s.sets[e.id]&&s.sets[e.id].length) lines.push('<strong>'+esc(nameIn(s,e))+'</strong> '+s.sets[e.id].map(function(st){return esc(setStr(e,st));}).join(", ")); });
       } else {
-        day.blocks.forEach(function(b){ var n=(s.rounds&&s.rounds[b.id]||[]).filter(Boolean).length; lines.push('<strong>'+esc(b.n)+'</strong> '+n+' / '+b.rounds+' rounds'); });
+        day.blocks.forEach(function(b){ var n=(s.rounds&&s.rounds[b.id]||[]).filter(Boolean).length; lines.push('<strong>'+esc(b.n)+'</strong> '+n+' / '+(day.box&&s.rounds&&s.rounds[b.id]?s.rounds[b.id].length:b.rounds)+' '+(b.u||"rounds")); });
       }
     } else if(a.src==="cardio"){
       title=s.type; tag="Cardio"; lines=extraHist(s);
     } else {
       title=s.kind==="muscu"?s.title:s.sub; tag=KIND_LABEL[s.kind]; lines=extraHist(s);
     }
-    h+='<article class="hist-item kind-'+(a.src==="sessions"?"prog":(a.src==="cardio"?"cardio":s.kind))+'"><header><h3>'+fmtDate(s.date)+' · '+esc(title)+'</h3><span class="tag">'+esc(tag)+'</span></header>';
+    h+='<article class="hist-item kind-'+(a.src==="sessions"?(PROGRAM[s.day].box?"boxe":"prog"):(a.src==="cardio"?"cardio":s.kind))+'"><header><h3>'+fmtDate(s.date)+' · '+esc(title)+'</h3><span class="tag">'+esc(tag)+'</span></header>';
     h+=lines.map(function(l){return '<p>'+l+'</p>';}).join("");
     if(note) h+='<p><em>'+esc(note)+'</em></p>';
     if(ui.editDate===s.id){
@@ -842,6 +980,7 @@ root.addEventListener("click",function(ev){
   var b=ev.target.closest("button"); if(!b) return;
   if(b.dataset.tab){ ui.tab=b.dataset.tab; render(); return; }
   if(b.dataset.day){ ui.day=b.dataset.day; render(); return; }
+  if(b.dataset.bx){ ui.bxDay=b.dataset.bx; ui.editing=null; render(); return; }
   if(b.dataset.kind){ ui.addKind=b.dataset.kind; render(); return; }
   if(b.dataset.rpe){ var ad=addDraftFor(ui.addKind), rv=+b.dataset.rpe; ad.rpe=ad.rpe===rv?null:rv; saveAddDraft(); render(); return; }
   if(b.dataset.act&&b.dataset.act.indexOf("fx-")===0){
@@ -853,7 +992,7 @@ root.addEventListener("click",function(ev){
     saveAddDraft(); render(); return;
   }
   if(b.dataset.act==="add-save"){ saveExtra(); return; }
-  var act=b.dataset.act, d=getDraft(ui.day);
+  var act=b.dataset.act, K=curKey(), d=getDraft(K);
   if(act==="check"){
     var row=b.closest(".set"), exoEl=b.closest(".exo"), id=exoEl.dataset.exo, i=+row.dataset.i, exo=findExo(id);
     d.sets[id]=d.sets[id]||[]; var st=d.sets[id][i]=d.sets[id][i]||{};
@@ -865,12 +1004,12 @@ root.addEventListener("click",function(ev){
       if(st.b==null){ ib.focus(); toast("Indique d'abord tes "+(exo.b==="sec"?"secondes":exo.b)+"."); return; }
       st.done=true; row.classList.add("done"); startTimer(exo.rest);
     } else { st.done=false; row.classList.remove("done"); }
-    saveDraft(ui.day); return;
+    saveDraft(K); return;
   }
   if(act==="round"){
     var bid=b.closest(".exo").dataset.block, ri=+b.dataset.i;
     d.rounds[bid]=d.rounds[bid]||[]; d.rounds[bid][ri]=!d.rounds[bid][ri];
-    b.classList.toggle("done",d.rounds[bid][ri]); b.setAttribute("aria-pressed",String(d.rounds[bid][ri])); saveDraft(ui.day); return;
+    b.classList.toggle("done",d.rounds[bid][ri]); b.setAttribute("aria-pressed",String(d.rounds[bid][ri])); saveDraft(K); return;
   }
   if(act&&act.indexOf("rn")===0||act==="rename"){
     var ex=b.closest(".exo"), eid=ex&&ex.dataset.exo, eo=findExo(eid);
@@ -878,14 +1017,14 @@ root.addEventListener("click",function(ev){
     if(act==="rn-cancel"){ ui.editing=null; render(); return; }
     var val=(document.getElementById("rename-"+eid)||{}).value; val=(val||"").trim();
     if(act==="rn-reset"){
-      delete d.names[eid]; saveDraft(ui.day); ui.editing=null;
+      delete d.names[eid]; saveDraft(K); ui.editing=null;
       if(state.renames[eid]){ var oldR=state.renames[eid]; delete state.renames[eid]; persist("Exercice d'origine remis.",function(){ state.renames[eid]=oldR; }); } else render();
       return;
     }
     if(!val){ toast("Écris le nom de l'exercice."); return; }
-    if(act==="rn-today"){ if(val===baseName(eo)) delete d.names[eid]; else d.names[eid]=val; saveDraft(ui.day); ui.editing=null; render(); toast("Remplacé pour cette séance."); return; }
+    if(act==="rn-today"){ if(val===baseName(eo)) delete d.names[eid]; else d.names[eid]=val; saveDraft(K); ui.editing=null; render(); toast("Remplacé pour cette séance."); return; }
     if(act==="rn-always"){
-      delete d.names[eid]; saveDraft(ui.day); ui.editing=null;
+      delete d.names[eid]; saveDraft(K); ui.editing=null;
       var prevR=state.renames[eid];
       if(val===eo.n) delete state.renames[eid]; else state.renames[eid]=val;
       persist("Exercice remplacé pour les prochaines séances.",function(){ if(prevR) state.renames[eid]=prevR; else delete state.renames[eid]; }); return;
@@ -893,7 +1032,7 @@ root.addEventListener("click",function(ev){
   }
   if(act==="timer-add"){ startTimer(timer.left+30); return; }
   if(act==="timer-stop"){ timer.left=0; clearInterval(timer.id); updateTimer(); return; }
-  if(act==="reset"){ drafts[ui.day]={sets:{},rounds:{},note:"",names:{}}; ls("ts-draft-"+ui.day,null); render(); return; }
+  if(act==="reset"){ drafts[K]={sets:{},rounds:{},note:"",names:{}}; ls("ts-draft-"+K,null); render(); return; }
   if(act==="save"){ saveSession(); return; }
   if(act==="del"){
     if(b.dataset.confirm!=="1"){ b.dataset.confirm="1"; b.textContent="Confirmer la suppression"; return; }
@@ -915,6 +1054,11 @@ root.addEventListener("click",function(ev){
     if(b.dataset.confirm!=="1"){ b.dataset.confirm="1"; b.textContent="Confirmer"; return; }
     var keepC=state.cardio; state.cardio=state.cardio.filter(function(c){return c.id!==b.dataset.id;});
     persist("Séance de cardio supprimée.",function(){ state.cardio=keepC; }); return;
+  }
+  if(act==="bx-start"){
+    var bsv=document.getElementById("bx-start").value; if(!bsv){ toast("Choisis une date de début."); return; }
+    var oldB=state.boxStart; state.boxStart=bsv;
+    persist("Date de début enregistrée.",function(){ state.boxStart=oldB; }); render(); return;
   }
   if(act==="start"){
     var v=document.getElementById("start").value; if(!v) return;
@@ -938,12 +1082,12 @@ root.addEventListener("input",function(ev){
     saveAddDraft(); return;
   }
   var f=t.dataset&&t.dataset.f; if(!f) return;
-  var d=getDraft(ui.day);
-  if(f==="note"){ d.note=t.value; saveDraft(ui.day); return; }
-  if(f==="date"){ d.date=t.value||null; saveDraft(ui.day); return; }
+  var K=curKey(), d=getDraft(K);
+  if(f==="note"){ d.note=t.value; saveDraft(K); return; }
+  if(f==="date"){ d.date=t.value||null; saveDraft(K); return; }
   var row=t.closest(".set"), id=t.closest(".exo").dataset.exo, i=+row.dataset.i;
   d.sets[id]=d.sets[id]||[]; var st=d.sets[id][i]=d.sets[id][i]||{};
-  st[f]=num(t.value); saveDraft(ui.day);
+  st[f]=num(t.value); saveDraft(K);
 });
 root.addEventListener("change",function(ev){
   if(ev.target.id==="chart-exo"){ ui.chartExo=ev.target.value; render(); return; }
@@ -966,7 +1110,7 @@ root.addEventListener("submit",function(ev){
     persist("Cardio ajouté.",function(){ state.cardio.pop(); }); return;
   }
   var f=ev.target, id=f.dataset.test; if(!id) return;
-  var t=TESTS.filter(function(x){return x.id===id;})[0], raw=f.querySelector("input").value.trim(), v;
+  var t=TESTS.concat(BOX_TESTS).filter(function(x){return x.id===id;})[0], raw=f.querySelector("input").value.trim(), v;
   if(t.time && raw.indexOf(":")>-1){ var p=raw.split(":"); v=(+p[0])+(+p[1]||0)/60; } else v=num(raw);
   if(v==null||isNaN(v)){ toast("Entre un nombre"+(t.time?" ou un temps comme 26:30":"")+"."); return; }
   state.tests.push({id:id,v:v,date:todayStr()});
@@ -974,24 +1118,23 @@ root.addEventListener("submit",function(ev){
 });
 
 function saveSession(){
-  var day=PROGRAM[ui.day], d=getDraft(ui.day), w=weekOf(sessionDate(ui.day));
-  var sdate=sessionDate(ui.day);
+  var key=curKey(), day=PROGRAM[key], d=getDraft(key), sdate=sessionDate(key), w=day.box?boxWeekOf(sdate):weekOf(sdate);
   if(sdate>todayStr()){ toast("La date de la séance ne peut pas être dans le futur."); return; }
-  var s={id:Date.now().toString(36),date:sdate,day:ui.day,note:(d.note||"").trim()};
+  var s={id:Date.now().toString(36),date:sdate,day:key,note:(d.note||"").trim()};
   if(day.type==="muscu"){
     s.sets={}; var any=false;
     day.exos.forEach(function(e){
-      var arr=(d.sets[e.id]||[]).slice(0,setsFor(e,w)).filter(function(st){return st&&st.done&&st.b!=null;}).map(function(st){ var o={b:st.b}; if(st.a!=null) o.a=st.a; return o; });
+      var arr=(d.sets[e.id]||[]).slice(0,day.box?bxPlan(e,w).n:setsFor(e,w)).filter(function(st){return st&&st.done&&st.b!=null;}).map(function(st){ var o={b:st.b}; if(st.a!=null) o.a=st.a; return o; });
       if(arr.length){ s.sets[e.id]=arr; any=true; var un=nameNow(e,d); if(un!==e.n){ s.names=s.names||{}; s.names[e.id]=un; } }
     });
     if(!any){ toast("Valide au moins une série avec ✓ avant d'enregistrer."); return; }
   } else {
     s.rounds={}; var n=0;
-    day.blocks.forEach(function(b){ s.rounds[b.id]=(d.rounds[b.id]||[]).slice(0,b.rounds).map(Boolean); n+=s.rounds[b.id].filter(Boolean).length; });
+    day.blocks.forEach(function(b){ var nr=roundsFor(key,b,w), dr=d.rounds[b.id]||[]; s.rounds[b.id]=[]; for(var ri=0;ri<nr;ri++) s.rounds[b.id].push(!!dr[ri]); n+=s.rounds[b.id].filter(Boolean).length; });
     if(!n){ toast("Coche au moins un round avant d'enregistrer."); return; }
   }
   state.sessions.push(s); state.sessions.sort(function(x,y){return x.date<y.date?-1:(x.date>y.date?1:0);});
-  var backup=JSON.stringify(drafts[ui.day]), dayKey=ui.day;
+  var backup=JSON.stringify(drafts[key]), dayKey=key;
   ls("ts-draft-"+dayKey,null); drafts[dayKey]={sets:{},rounds:{},note:"",names:{}};
   persist("Séance enregistrée. Bien joué !",function(){ state.sessions.pop(); drafts[dayKey]=JSON.parse(backup); ls("ts-draft-"+dayKey,backup); });
 }
