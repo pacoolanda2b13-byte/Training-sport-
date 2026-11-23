@@ -214,6 +214,7 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 .themes li.ok{color:var(--muted);text-decoration:line-through}
 .tips{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
 .vids{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
+.card.recover{border-color:var(--warn);border-width:2px}
 .days.three{grid-template-columns:repeat(3,1fr)}
 .vid{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 .rules{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
@@ -224,7 +225,7 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 </head>
 <body>
 <div id="root"></div>
-<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwke3dp4","date":"2026-11-16","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]},"names":{"reardelt":"Oiseau poulie","curl":"Curl barre machine"}},{"id":"mwkzzz1t","date":"2026-11-17","day":"mar","note":"","sets":{"bench":[{"b":8,"a":60},{"b":8,"a":60},{"b":6,"a":60}],"incline":[{"b":8,"a":50},{"b":8,"a":36},{"b":8,"a":36}],"dips":[{"b":10,"a":14},{"b":10,"a":14},{"b":8,"a":14}],"cablefly":[{"b":15,"a":20},{"b":15,"a":25},{"b":15,"a":30}],"skull":[{"b":8,"a":63},{"b":8,"a":50},{"b":8,"a":50}],"pushdown":[{"b":12,"a":9},{"b":12,"a":9},{"b":12,"a":9}]},"names":{"incline":"Brust press","dips":"Haltère incliné","skull":"Triceps press"}},{"id":"mwme6x0x","date":"2026-11-18","day":"mer","note":"","sets":{"deadlift":[{"b":8,"a":80},{"b":8,"a":80},{"b":8,"a":80}],"pullup":[{"b":15,"a":36},{"b":12,"a":57},{"b":12,"a":57}],"row":[{"b":10,"a":40},{"b":10,"a":40},{"b":12,"a":40}],"latpull":[{"b":8,"a":59},{"b":8,"a":52},{"b":8,"a":52}],"dbrow":[{"b":10,"a":18},{"b":10,"a":18},{"b":10,"a":18}],"facepull":[{"b":8,"a":67},{"b":10,"a":52},{"b":10,"a":52}]},"names":{"pullup":"Latpulldown","facepull":"Trapèze machine"}}],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5},"renames":{},"extras":[{"id":"mwlywogl","kind":"boxe","date":"2026-11-18","min":60,"rpe":7,"note":"Travail au sac + travaille esquive de tête","sub":"Sac de frappe"},{"id":"mwnu6m8y","kind":"boxe","date":"2026-11-19","min":40,"rpe":7,"sub":"Sac de frappe"},{"id":"mwpdt5fn","kind":"boxe","date":"2026-11-20","min":80,"rpe":9,"sub":"Sac de frappe"}]}</script>
+<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwke3dp4","date":"2026-11-16","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]},"names":{"reardelt":"Oiseau poulie","curl":"Curl barre machine"}},{"id":"mwkzzz1t","date":"2026-11-17","day":"mar","note":"","sets":{"bench":[{"b":8,"a":60},{"b":8,"a":60},{"b":6,"a":60}],"incline":[{"b":8,"a":50},{"b":8,"a":36},{"b":8,"a":36}],"dips":[{"b":10,"a":14},{"b":10,"a":14},{"b":8,"a":14}],"cablefly":[{"b":15,"a":20},{"b":15,"a":25},{"b":15,"a":30}],"skull":[{"b":8,"a":63},{"b":8,"a":50},{"b":8,"a":50}],"pushdown":[{"b":12,"a":9},{"b":12,"a":9},{"b":12,"a":9}]},"names":{"incline":"Brust press","dips":"Haltère incliné","skull":"Triceps press"}},{"id":"mwme6x0x","date":"2026-11-18","day":"mer","note":"","sets":{"deadlift":[{"b":8,"a":80},{"b":8,"a":80},{"b":8,"a":80}],"pullup":[{"b":15,"a":36},{"b":12,"a":57},{"b":12,"a":57}],"row":[{"b":10,"a":40},{"b":10,"a":40},{"b":12,"a":40}],"latpull":[{"b":8,"a":59},{"b":8,"a":52},{"b":8,"a":52}],"dbrow":[{"b":10,"a":18},{"b":10,"a":18},{"b":10,"a":18}],"facepull":[{"b":8,"a":67},{"b":10,"a":52},{"b":10,"a":52}]},"names":{"pullup":"Latpulldown","facepull":"Trapèze machine"}}],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5},"renames":{},"extras":[{"id":"mwlywogl","kind":"boxe","date":"2026-11-18","min":60,"rpe":7,"note":"Travail au sac + travaille esquive de tête","sub":"Sac de frappe"},{"id":"mwnu6m8y","kind":"boxe","date":"2026-11-19","min":40,"rpe":7,"sub":"Sac de frappe"},{"id":"mwpdt5fn","kind":"boxe","date":"2026-11-20","min":80,"rpe":9,"sub":"Sac de frappe"}],"boxStart":"2026-11-24"}</script>
 <script id="app">
 (function(){
 "use strict";
@@ -527,9 +528,62 @@ function renderBoxExos(key,w){
   });
   return h;
 }
+/* ---------- Récupération des séances restées sur le téléphone ---------- */
+function dismissed(){ return (ls("ts-dismiss")||"").split(",").filter(Boolean); }
+function draftSession(k){
+  var raw=ls("ts-draft-"+k), d=null; if(!raw) return null;
+  try{ d=JSON.parse(raw); }catch(e){ return null; }
+  if(!d) return null;
+  var day=PROGRAM[k], date=d.date||defaultDateFor(k), s={id:"dr-"+k+"-"+date,date:date,day:k,note:(d.note||"").trim()}, n=0;
+  (day.exos||[]).forEach(function(e){
+    var arr=((d.sets||{})[e.id]||[]).filter(function(st){ return st&&st.done&&st.b!=null; }).map(function(st){ var o={b:st.b}; if(st.a!=null) o.a=st.a; return o; });
+    if(arr.length){ s.sets=s.sets||{}; s.sets[e.id]=arr; n++; if(d.names&&d.names[e.id]){ s.names=s.names||{}; s.names[e.id]=d.names[e.id]; } }
+  });
+  (day.blocks||[]).forEach(function(b){
+    var dr=(d.rounds||{})[b.id]||[], arr=[]; for(var i=0;i<b.rounds;i++) arr.push(!!dr[i]);
+    if(arr.some(Boolean)){ s.rounds=s.rounds||{}; s.rounds[b.id]=arr; n++; }
+  });
+  return n?s:null;
+}
+function pendingItems(){
+  if(!artReady) return [];
+  var out=[], have={}, skip=dismissed(), loc=null;
+  ["sessions","extras","cardio"].forEach(function(k){ (state[k]||[]).forEach(function(x){ if(x&&x.id) have[x.id]=1; }); });
+  try{ loc=JSON.parse(ls("ts-state")||"null"); }catch(e){}
+  if(loc) ["sessions","extras","cardio"].forEach(function(k){ (loc[k]||[]).forEach(function(x){ if(x&&x.id&&x.date&&!have[x.id]&&skip.indexOf(x.id)<0&&(k!=="sessions"||PROGRAM[x.day])) out.push({src:k,obj:x}); }); });
+  DAY_ORDER.forEach(function(k){
+    var s=draftSession(k); if(!s||have[s.id]||skip.indexOf(s.id)>=0) return;
+    var dup=out.some(function(p){ return p.src==="sessions"&&p.obj.day===k&&p.obj.date===s.date; })||state.sessions.some(function(x){ return x.day===k&&x.date===s.date; });
+    if(!dup) out.push({src:"sessions",obj:s,draft:k});
+  });
+  return out;
+}
+function pendingTitle(p){ var x=p.obj; if(p.src==="sessions") return (PROGRAM[x.day]||{name:"Séance"}).name; if(p.src==="cardio") return x.type; return x.kind==="muscu"?(x.title||"Muscu"):(x.sub||KIND_LABEL[x.kind]||"Séance"); }
+function renderPending(){
+  var pend=pendingItems(); if(!pend.length) return "";
+  var h="<section class='card recover'><div class='session-head'><h2>Séance"+(pend.length>1?"s":"")+" à récupérer</h2></div>";
+  h+="<div class='hint'>"+(pend.length>1?"Ces séances sont restées":"Cette séance est restée")+" sur ce téléphone sans arriver dans le carnet (enregistrement refusé pendant une mise à jour).</div><ul class='rules'>";
+  pend.forEach(function(p){ h+="<li><strong>"+esc(fmtDate(p.obj.date))+"</strong> · "+esc(pendingTitle(p))+"</li>"; });
+  h+="</ul><button type='button' class='btn' data-act='rec-ok'>Récupérer dans l’historique</button><button type='button' class='btn ghost' data-act='rec-no'>Ignorer</button></section>";
+  return h;
+}
+function recoverPending(){
+  var pend=pendingItems(); if(!pend.length) return;
+  var backup=JSON.stringify({sessions:state.sessions,extras:state.extras,cardio:state.cardio});
+  pend.forEach(function(p){ state[p.src].push(p.obj); });
+  state.sessions.sort(function(x,y){ return x.date<y.date?-1:(x.date>y.date?1:0); });
+  var drafts0=pend.filter(function(p){ return p.draft; }).map(function(p){ return p.draft; });
+  persist("Récupéré : "+pend.length+" séance"+(pend.length>1?"s":"")+" ajoutée"+(pend.length>1?"s":"")+" à l’historique.",function(){ var b=JSON.parse(backup); state.sessions=b.sessions; state.extras=b.extras; state.cardio=b.cardio; }).then(function(ok){ if(ok) drafts0.forEach(function(k){ ls("ts-draft-"+k,null); delete drafts[k]; }); render(); });
+  render();
+}
+function dismissPending(){
+  var ids=dismissed().concat(pendingItems().map(function(p){ return p.obj.id; }));
+  ls("ts-dismiss",ids.join(",")); render(); toast("Ignoré.");
+}
+
 function renderBox(){
   var w=boxWeekOf(todayStr()), done=boxDone(w), key=ui.bxDay, day=PROGRAM[key], todayKey=new Date().getDay()===0?null:BOX_ORDER[new Date().getDay()-1];
-  var h="";
+  var h=renderPending();
   if(!state.boxStart) h+="<section class='card'><h2>Quand commences-tu ?</h2><div class='hint'>Choisis le lundi de ta semaine 1 : les séries, les rounds et les thèmes suivent ensuite les 3 blocs tout seuls.</div><label class='inline' for='bx-start'>Début du programme (semaine 1)<input type='date' id='bx-start' value='"+todayStr()+"'></label><button type='button' class='btn' data-act='bx-start'>Démarrer le programme</button></section>";
   h+="<div class='days'>";
   BOX_ORDER.forEach(function(k){ h+="<button type='button' data-bx='"+k+"' aria-pressed='"+(key===k)+"' class='"+(k===todayKey?"today":"")+"'><b>"+BOX_DAY[k]+"</b><i>"+esc(PROGRAM[k].short)+"</i><span class='dot"+(done[k]?" on":"")+"'></span></button>"; });
@@ -920,7 +974,7 @@ function persist(okMsg,onFail){
   return art.publish(buildDoc()).then(function(){ saving=false; toast(okMsg); return true; }).catch(function(e){
     saving=false;
     var code=(e&&(e.code||e.name||e.message))||"";
-    if(/conflict/i.test(code)){ toast("La page a été mise à jour ailleurs, elle se recharge."); }
+    if(/conflict/i.test(code)){ toast("Pas enregistré : le carnet a été mis à jour entre-temps. Recharge-le, ta séance te sera proposée en récupération."); }
     else if(/not_granted|not_writer/i.test(code)){ toast("Tu n'as pas le droit d'enregistrer sur cette page. Sauvegarde gardée dans ce navigateur."); }
     else { toast("Enregistrement impossible pour le moment. Ta séance est gardée dans ce navigateur, réessaie."); }
     if(onFail) onFail();
@@ -1113,6 +1167,8 @@ root.addEventListener("click",function(ev){
   if(b.dataset.act==="add-save"){ saveExtra(); return; }
   var act=b.dataset.act, K=curKey(), d=getDraft(K);
   if(act==="play"){ playerStart(K,b.dataset.block); return; }
+  if(act==="rec-ok"){ recoverPending(); return; }
+  if(act==="rec-no"){ dismissPending(); return; }
   if(act==="snd-test"){ SND.go(); say("Test du son. Repos, une minute trente."); return; }
   if(act==="check"){
     var row=b.closest(".set"), exoEl=b.closest(".exo"), id=exoEl.dataset.exo, i=+row.dataset.i, exo=findExo(id);
