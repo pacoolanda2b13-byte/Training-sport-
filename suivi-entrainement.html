@@ -215,6 +215,10 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 .tips{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
 .vids{display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
 .card.recover{border-color:var(--warn);border-width:2px}
+.alts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.alts .label-like{width:100%}
+.alt{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:14px;text-align:left}
+.alt.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .days.three{grid-template-columns:repeat(3,1fr)}
 .vid{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:2px}
 .rules{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
@@ -225,7 +229,7 @@ label.inline input{border:1px solid var(--line);background:var(--bg);border-radi
 </head>
 <body>
 <div id="root"></div>
-<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwke3dp4","date":"2026-11-16","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]},"names":{"reardelt":"Oiseau poulie","curl":"Curl barre machine"}},{"id":"mwkzzz1t","date":"2026-11-17","day":"mar","note":"","sets":{"bench":[{"b":8,"a":60},{"b":8,"a":60},{"b":6,"a":60}],"incline":[{"b":8,"a":50},{"b":8,"a":36},{"b":8,"a":36}],"dips":[{"b":10,"a":14},{"b":10,"a":14},{"b":8,"a":14}],"cablefly":[{"b":15,"a":20},{"b":15,"a":25},{"b":15,"a":30}],"skull":[{"b":8,"a":63},{"b":8,"a":50},{"b":8,"a":50}],"pushdown":[{"b":12,"a":9},{"b":12,"a":9},{"b":12,"a":9}]},"names":{"incline":"Brust press","dips":"Haltère incliné","skull":"Triceps press"}},{"id":"mwme6x0x","date":"2026-11-18","day":"mer","note":"","sets":{"deadlift":[{"b":8,"a":80},{"b":8,"a":80},{"b":8,"a":80}],"pullup":[{"b":15,"a":36},{"b":12,"a":57},{"b":12,"a":57}],"row":[{"b":10,"a":40},{"b":10,"a":40},{"b":12,"a":40}],"latpull":[{"b":8,"a":59},{"b":8,"a":52},{"b":8,"a":52}],"dbrow":[{"b":10,"a":18},{"b":10,"a":18},{"b":10,"a":18}],"facepull":[{"b":8,"a":67},{"b":10,"a":52},{"b":10,"a":52}]},"names":{"pullup":"Latpulldown","facepull":"Trapèze machine"}}],"tests":[],"weights":[],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5},"renames":{},"extras":[{"id":"mwlywogl","kind":"boxe","date":"2026-11-18","min":60,"rpe":7,"note":"Travail au sac + travaille esquive de tête","sub":"Sac de frappe"},{"id":"mwnu6m8y","kind":"boxe","date":"2026-11-19","min":40,"rpe":7,"sub":"Sac de frappe"},{"id":"mwpdt5fn","kind":"boxe","date":"2026-11-20","min":80,"rpe":9,"sub":"Sac de frappe"}],"boxStart":"2026-11-24"}</script>
+<script type="application/json" id="state">{"startDate":"2026-11-16","sessions":[{"id":"mwke3dp4","date":"2026-11-16","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":10,"a":20},{"b":8,"a":24}],"landmine":[{"b":6,"a":10},{"b":6,"a":10},{"b":6,"a":10}],"lateral":[{"b":22,"a":6},{"b":20,"a":6},{"b":20,"a":6}],"reardelt":[{"b":10,"a":9},{"b":8,"a":9},{"b":6,"a":9}],"curl":[{"b":10,"a":36},{"b":10,"a":36},{"b":8,"a":29}],"hammer":[{"b":10,"a":14},{"b":10,"a":12},{"b":10,"a":12}],"inclinecurl":[{"b":8,"a":8},{"b":8,"a":8},{"b":10,"a":8}]},"names":{"reardelt":"Oiseau poulie","curl":"Curl barre machine"}},{"id":"mwkzzz1t","date":"2026-11-17","day":"mar","note":"","sets":{"bench":[{"b":8,"a":60},{"b":8,"a":60},{"b":6,"a":60}],"incline":[{"b":8,"a":50},{"b":8,"a":36},{"b":8,"a":36}],"dips":[{"b":10,"a":14},{"b":10,"a":14},{"b":8,"a":14}],"cablefly":[{"b":15,"a":20},{"b":15,"a":25},{"b":15,"a":30}],"skull":[{"b":8,"a":63},{"b":8,"a":50},{"b":8,"a":50}],"pushdown":[{"b":12,"a":9},{"b":12,"a":9},{"b":12,"a":9}]},"names":{"incline":"Brust press","dips":"Haltère incliné","skull":"Triceps press"}},{"id":"mwme6x0x","date":"2026-11-18","day":"mer","note":"","sets":{"deadlift":[{"b":8,"a":80},{"b":8,"a":80},{"b":8,"a":80}],"pullup":[{"b":15,"a":36},{"b":12,"a":57},{"b":12,"a":57}],"row":[{"b":10,"a":40},{"b":10,"a":40},{"b":12,"a":40}],"latpull":[{"b":8,"a":59},{"b":8,"a":52},{"b":8,"a":52}],"dbrow":[{"b":10,"a":18},{"b":10,"a":18},{"b":10,"a":18}],"facepull":[{"b":8,"a":67},{"b":10,"a":52},{"b":10,"a":52}]},"names":{"pullup":"Latpulldown","facepull":"Trapèze machine"}},{"id":"dr-lun-2026-11-23","date":"2026-11-23","day":"lun","note":"","sets":{"ohp":[{"b":10,"a":16},{"b":12,"a":16},{"b":10,"a":16}],"landmine":[{"b":10.1,"a":15},{"b":10.1,"a":15},{"b":10.1,"a":15}],"lateral":[{"b":22,"a":6},{"b":22,"a":6},{"b":22,"a":6}],"reardelt":[{"b":10,"a":4.5},{"b":10,"a":4.5},{"b":10,"a":4.5}],"curl":[{"b":10.1,"a":20},{"b":10.1,"a":20},{"b":10.1,"a":20}],"hammer":[{"b":10,"a":165},{"b":10,"a":188},{"b":10,"a":188}]},"names":{"ohp":"Développé militaire unilatéral","curl":"Épauler jeter + bruleur d'épaule vertical","hammer":"Leg press"}},{"id":"mwuwhiuh","date":"2026-11-24","day":"bxs1","note":"","rounds":{"bx_warm1":[true,true,true,true],"bx_foot1":[true,true,true,true],"bx_bag1":[true,true,true,true,true,true]}}],"tests":[],"weights":[{"date":"2026-11-24","v":77.5}],"cardio":[],"goal":{"start":79,"target":72,"rate":0.5},"renames":{},"extras":[{"id":"mwlywogl","kind":"boxe","date":"2026-11-18","min":60,"rpe":7,"note":"Travail au sac + travaille esquive de tête","sub":"Sac de frappe"},{"id":"mwnu6m8y","kind":"boxe","date":"2026-11-19","min":40,"rpe":7,"sub":"Sac de frappe"},{"id":"mwpdt5fn","kind":"boxe","date":"2026-11-20","min":80,"rpe":9,"sub":"Sac de frappe"}],"boxStart":"2026-11-24"}</script>
 <script id="app">
 (function(){
 "use strict";
@@ -293,44 +297,44 @@ var FOOT_VIDS=[["Pivots et angles","https://m.youtube.com/watch?v=TSyV2i56BFA"],
 var SAC_VIDS=[["5 erreurs au sac","https://www.youtube.com/watch?v=41VWuWJeEpY"],["Frapper sans faire balancer le sac","https://www.youtube.com/watch?v=N_RKWFsl14g"],["Conseils au sac","https://expertboxing.com/10-heavy-bag-training-tips"]];
 var WARM={n:"Échauffement",u:"rounds",rounds:[4],d:["2 rounds de corde facile, puis 2 rounds de shadow."],iv:[{p:[["#",120,"easy"]],rest:30}],themes:[["Corde facile","Corde facile","Shadow : déplacements","Shadow : jab et mouvement"]]};
 var FOOT_D="Petits pas, sans sauter, poids du corps bas. Pour avancer, le pied avant part en premier ; pour reculer, le pied arrière. Pivot sur la plante du pied avant.";
-var KAM={n:"Sprints au sac",u:"rounds",blocs:[2],rounds:[3],d:["Format de l'étude Kamandulis 2018 : 14 × (3 s à fond, 10 s de pause) par round, 1 min entre les rounds. Coups droits rapides, garde haute."],iv:[{p:[["À fond",3,"work"],["Pause",10,"rest"]],rep:14,rest:60}]};
+var KAM={n:"Sprints au sac",sn:"Sprints en shadow",u:"rounds",blocs:[2],rounds:[3],d:["Format de l'étude Kamandulis 2018 : 14 × (3 s à fond, 10 s de pause) par round, 1 min entre les rounds. Coups droits rapides, garde haute."],iv:[{p:[["À fond",3,"work"],["Pause",10,"rest"]],rep:14,rest:60}]};
 function cp(o,x){ var r={}, k; for(k in o) r[k]=o[k]; for(k in x) r[k]=x[k]; return r; }
 
 PROGRAM.bxa={box:true,name:"Jambes lourdes, lancers et corde",short:"Jambes",when:"Lourd pour les jambes, lancers pour le haut du corps : la combinaison que conseille le manuel canadien. Lancers en premier, corde à la fin.",exos:[
-  {id:"bx_mbrot",n:"Lancers médecine-ball en rotation",bs:[3,4,4],br:["5 / côté"],a:"kg",b:"reps",rest:90,tip:"Contre le mur, de toutes tes forces, en partant des hanches : c'est le geste du crochet.",v:"https://www.youtube.com/watch?v=O3ME1cTuO7Y"},
-  {id:"bx_mbchest",n:"Lancers médecine-ball poitrine",bs:[3,3,4],br:["5"],a:"kg",b:"reps",rest:90,tip:"Contre le mur, poussée explosive des deux bras, en garde.",v:"https://www.youtube.com/watch?v=8Afl4gCpyDU"},
-  {id:"bx_tbdl",n:"Soulevé de terre barre hexagonale",bs:[4,4,4],br:["5","3","3"],a:"kg",b:"reps",rest:180,bt:["Garde 2-3 répétitions en réserve, technique parfaite.","Lourd : environ 85-90 % de ton max, 1-2 répétitions en réserve.","Explosif : environ 75-80 %, la barre monte le plus vite possible."],v:"https://www.youtube.com/watch?v=JmitFSuXtPo"},
-  {id:"bx_bulg",n:"Squat bulgare haltères",bs:[3,3,3],br:["6 / jambe","5 / jambe","5 / jambe"],a:"kg",b:"reps",rest:90,bt:["2-3 répétitions en réserve, jamais à l'échec.","Plus lourd, 1-2 répétitions en réserve.","Montée explosive."]},
-  {id:"bx_rdl",n:"Soulevé de terre roumain",bs:[3,3,3],br:["6"],a:"kg",b:"reps",rest:90,tip:"Dos plat, 2-3 répétitions en réserve."},
-  {id:"bx_neck",n:"Cou en isométrie",bs:[3,3,3],br:["15 s × 4 directions"],a:null,b:"sec",rest:20,tip:"Main contre la tête (avant, arrière, côtés) : tu pousses à 60-70 % de ta force, sans bouger.",v:"https://www.youtube.com/watch?v=DO3RtUQH9kA"}
+  {id:"bx_mbrot",alt:["Rotation explosive à la poulie", "Rotation explosive à l'élastique", "Landmine en rotation"],n:"Lancers médecine-ball en rotation",bs:[3,4,4],br:["5 / côté"],a:"kg",b:"reps",rest:90,tip:"Contre le mur, de toutes tes forces, en partant des hanches : c'est le geste du crochet.",v:"https://www.youtube.com/watch?v=O3ME1cTuO7Y"},
+  {id:"bx_mbchest",alt:["Pompes explosives", "Lancer de médecine-ball allongé, vers le haut", "Développé haltères explosif (léger)"],n:"Lancers médecine-ball poitrine",bs:[3,3,4],br:["5"],a:"kg",b:"reps",rest:90,tip:"Contre le mur, poussée explosive des deux bras, en garde.",v:"https://www.youtube.com/watch?v=8Afl4gCpyDU"},
+  {id:"bx_tbdl",alt:["Soulevé de terre classique", "Squat barre", "Presse à cuisses lourde"],n:"Soulevé de terre barre hexagonale",bs:[4,4,4],br:["5","3","3"],a:"kg",b:"reps",rest:180,bt:["Garde 2-3 répétitions en réserve, technique parfaite.","Lourd : environ 85-90 % de ton max, 1-2 répétitions en réserve.","Explosif : environ 75-80 %, la barre monte le plus vite possible."],v:"https://www.youtube.com/watch?v=JmitFSuXtPo"},
+  {id:"bx_bulg",alt:["Fentes arrière haltères", "Montées sur box haltères", "Split squat à la Smith"],n:"Squat bulgare haltères",bs:[3,3,3],br:["6 / jambe","5 / jambe","5 / jambe"],a:"kg",b:"reps",rest:90,bt:["2-3 répétitions en réserve, jamais à l'échec.","Plus lourd, 1-2 répétitions en réserve.","Montée explosive."]},
+  {id:"bx_rdl",alt:["Roumain haltères", "Hip thrust barre", "Kettlebell swing lourd"],n:"Soulevé de terre roumain",bs:[3,3,3],br:["6"],a:"kg",b:"reps",rest:90,tip:"Dos plat, 2-3 répétitions en réserve."},
+  {id:"bx_neck",alt:["Cou avec élastique", "Cou avec serviette", "Machine à cou"],n:"Cou en isométrie",bs:[3,3,3],br:["15 s × 4 directions"],a:null,b:"sec",rest:20,tip:"Main contre la tête (avant, arrière, côtés) : tu pousses à 60-70 % de ta force, sans bouger.",v:"https://www.youtube.com/watch?v=DO3RtUQH9kA"}
 ],blocks:[
   {id:"bx_ropeA",n:"Corde · endurance",u:"rounds",rounds:[5,6,6],d:["Niveau 2 : pas de boxeur rythmé, tu peux dire des phrases courtes. 1 min au niveau 1 entre les rounds.","Niveau 2, 6 rounds. 1 min au niveau 1 entre les rounds.","2 min au niveau 2, puis 1 min au niveau 3. 1 min au niveau 1 entre les rounds."],iv:[{p:[["Niveau 2 : endurance",180,"work"]],rest:60,rl:"Niveau 1 : facile",rk:"easy"},{p:[["Niveau 2 : endurance",180,"work"]],rest:60,rl:"Niveau 1 : facile",rk:"easy"},{p:[["Niveau 2 : endurance",120,"work"],["Niveau 3 : rapide",60,"work"]],rest:60,rl:"Niveau 1 : facile",rk:"easy"}]}
 ]};
 PROGRAM.bxs1={box:true,name:"Sac et jeu de jambes",short:"Sac 1",when:"À l'espace boxe de la salle. Rounds de 3 min avec 1 min de récup, comme en combat.",tips:SAC_TIPS,blocks:[
   cp(WARM,{id:"bx_warm1"}),
   {id:"bx_foot1",n:"Jeu de jambes",u:"exercices",rounds:[4],d:[FOOT_D],iv:[{p:[["#",120,"work"]],rest:30}],themes:[["Pas glissés avant et arrière","Pas glissés à gauche et à droite","Pivots sur le pied avant, 10 de chaque côté puis en continu","Pas latéral puis jab"]],vs:FOOT_VIDS},
-  {id:"bx_bag1",n:"Sac",u:"rounds",rounds:[6,6,4],d:["Un thème par round. Technique propre avant la vitesse.","Rounds appuyés : chaque coup part de la jambe et de la hanche, sans perdre la garde.","Simulation de combat : alterne attaque, défense et déplacements comme face à un adversaire."],iv:[{p:[["#",180,"work"]],rest:60}],themes:[["Jab seul en tournant autour du sac","1-2 puis sortie en pivot","Enchaînement puis défense : rotation de tête","Corps-tête : direct au corps, crochet à la tête","Crochets courts à courte distance","Round libre, technique propre"],["1-2 appuyés, retour en garde","Crochet du bras avant appuyé, la hanche tourne","Direct au corps puis crochet à la tête, appuyés","Jab, direct, crochet, puis pivot","Uppercuts appuyés à courte distance","Round libre : enchaînements appuyés"],["Prends le centre : jab et déplacements","Pression : enchaînements au corps et à la tête","Contre-attaque après une défense","Tout donner, mains rapides"]],vs:SAC_VIDS},
+  {id:"bx_bag1",n:"Sac",sn:"Shadow (sac pris)",u:"rounds",rounds:[6,6,4],d:["Un thème par round. Technique propre avant la vitesse.","Rounds appuyés : chaque coup part de la jambe et de la hanche, sans perdre la garde.","Simulation de combat : alterne attaque, défense et déplacements comme face à un adversaire."],iv:[{p:[["#",180,"work"]],rest:60}],themes:[["Jab seul en tournant autour du sac","1-2 puis sortie en pivot","Enchaînement puis défense : rotation de tête","Corps-tête : direct au corps, crochet à la tête","Crochets courts à courte distance","Round libre, technique propre"],["1-2 appuyés, retour en garde","Crochet du bras avant appuyé, la hanche tourne","Direct au corps puis crochet à la tête, appuyés","Jab, direct, crochet, puis pivot","Uppercuts appuyés à courte distance","Round libre : enchaînements appuyés"],["Prends le centre : jab et déplacements","Pression : enchaînements au corps et à la tête","Contre-attaque après une défense","Tout donner, mains rapides"]],vs:SAC_VIDS},
   cp(KAM,{id:"bx_kam1"})
 ]};
 PROGRAM.bxb={box:true,name:"Haut du corps lourd, sauts et corde",short:"Haut",when:"Sauts en premier, quand tu es frais, 48 h après les jambes lourdes. Corde à la fin.",exos:[
-  {id:"bx_sqjump",n:"Squats sautés, mains derrière la nuque",blocs:[0],bs:[3],br:["6"],a:null,b:"reps",rest:60,tip:"Descends, rebondis tout de suite, réception sur les deux pieds. 1-2 s entre les sauts."},
-  {id:"bx_latjump",n:"Sauts latéraux pieds joints",blocs:[0],bs:[3],br:["8"],a:null,b:"reps",rest:60,tip:"Par-dessus un petit plot, d'un côté à l'autre, contacts courts."},
-  {id:"bx_boxjump",n:"Sauts sur box",blocs:[1,2],bs:[4,4,4],br:["5"],a:null,b:"reps",rest:90,tip:"Réception douce et silencieuse, tu redescends en marchant.",v:"https://www.youtube.com/watch?v=0BAArRu04CM"},
-  {id:"bx_latbox",n:"Sauts latéraux sur box",blocs:[1],bs:[3,3,3],br:["6 / côté"],a:null,b:"reps",rest:90,tip:"Départ à côté de la box, saut dessus en latéral."},
-  {id:"bx_tuck",n:"Sauts groupés",blocs:[2],bs:[3,3,3],br:["6"],a:null,b:"reps",rest:90,tip:"Genoux à la poitrine, enchaînés, réception souple."},
-  {id:"bx_splitjump",n:"Fentes sautées",blocs:[2],bs:[3,3,3],br:["8 (4 / jambe)"],a:null,b:"reps",rest:90,tip:"Change de jambe en l'air, réception contrôlée."},
-  {id:"bx_bench",n:"Développé couché",bs:[4,4,4],br:["5","3","3"],a:"kg",b:"reps",rest:180,bt:["Garde 2-3 répétitions en réserve.","Lourd : environ 85-90 % de ton max, 1-2 répétitions en réserve.","Explosif : environ 75-80 %, barre le plus vite possible."]},
-  {id:"bx_pull",n:"Tractions",bs:[4,4,4],br:["5","4","3"],a:"lest",b:"reps",rest:120,bt:["Lest vide, 2 répétitions en réserve.","Lestées si tu peux (kg dans la case lest).","Montée explosive."]},
-  {id:"bx_lmpunch",n:"Landmine punch",bs:[3,4,4],br:["4 / bras"],a:"kg",b:"reps",rest:90,tip:"En garde, pousse sur la jambe arrière et tourne la hanche, comme un direct.",v:"https://www.youtube.com/watch?v=n-jjDk5N7FI"},
-  {id:"bx_row",n:"Rowing haltère",bs:[3,3,3],br:["6 / bras"],a:"kg",b:"reps",rest:90},
-  {id:"bx_facepull",n:"Face pull",bs:[2,2,2],br:["15"],a:"kg",b:"reps",rest:45,tip:"Léger : c'est pour la santé des épaules."}
+  {id:"bx_sqjump",alt:["Sauts sur box basse", "Sauts en longueur sans élan"],n:"Squats sautés, mains derrière la nuque",blocs:[0],bs:[3],br:["6"],a:null,b:"reps",rest:60,tip:"Descends, rebondis tout de suite, réception sur les deux pieds. 1-2 s entre les sauts."},
+  {id:"bx_latjump",alt:["Bonds latéraux (patineur)", "Sauts latéraux par-dessus un plot"],n:"Sauts latéraux pieds joints",blocs:[0],bs:[3],br:["8"],a:null,b:"reps",rest:60,tip:"Par-dessus un petit plot, d'un côté à l'autre, contacts courts."},
+  {id:"bx_boxjump",alt:["Squats sautés", "Sauts en longueur sans élan", "Sauts sur box basse"],n:"Sauts sur box",blocs:[1,2],bs:[4,4,4],br:["5"],a:null,b:"reps",rest:90,tip:"Réception douce et silencieuse, tu redescends en marchant.",v:"https://www.youtube.com/watch?v=0BAArRu04CM"},
+  {id:"bx_latbox",alt:["Bonds latéraux (patineur)", "Sauts latéraux par-dessus un plot"],n:"Sauts latéraux sur box",blocs:[1],bs:[3,3,3],br:["6 / côté"],a:null,b:"reps",rest:90,tip:"Départ à côté de la box, saut dessus en latéral."},
+  {id:"bx_tuck",alt:["Squats sautés enchaînés", "Sauts en longueur enchaînés"],n:"Sauts groupés",blocs:[2],bs:[3,3,3],br:["6"],a:null,b:"reps",rest:90,tip:"Genoux à la poitrine, enchaînés, réception souple."},
+  {id:"bx_splitjump",alt:["Montées sur box sautées", "Bonds latéraux (patineur)"],n:"Fentes sautées",blocs:[2],bs:[3,3,3],br:["8 (4 / jambe)"],a:null,b:"reps",rest:90,tip:"Change de jambe en l'air, réception contrôlée."},
+  {id:"bx_bench",alt:["Développé haltères", "Développé couché à la Smith", "Pompes lestées"],n:"Développé couché",bs:[4,4,4],br:["5","3","3"],a:"kg",b:"reps",rest:180,bt:["Garde 2-3 répétitions en réserve.","Lourd : environ 85-90 % de ton max, 1-2 répétitions en réserve.","Explosif : environ 75-80 %, barre le plus vite possible."]},
+  {id:"bx_pull",alt:["Tirage vertical prise serrée", "Tractions assistées", "Rowing inversé"],n:"Tractions",bs:[4,4,4],br:["5","4","3"],a:"lest",b:"reps",rest:120,bt:["Lest vide, 2 répétitions en réserve.","Lestées si tu peux (kg dans la case lest).","Montée explosive."]},
+  {id:"bx_lmpunch",alt:["Direct à la poulie", "Développé un bras debout en garde", "Direct à l'élastique"],n:"Landmine punch",bs:[3,4,4],br:["4 / bras"],a:"kg",b:"reps",rest:90,tip:"En garde, pousse sur la jambe arrière et tourne la hanche, comme un direct.",v:"https://www.youtube.com/watch?v=n-jjDk5N7FI"},
+  {id:"bx_row",alt:["Rowing poulie assis", "Rowing barre", "Rowing machine"],n:"Rowing haltère",bs:[3,3,3],br:["6 / bras"],a:"kg",b:"reps",rest:90},
+  {id:"bx_facepull",alt:["Écartés à l'élastique (band pull-apart)", "Oiseau haltères léger", "Y-T-W sur banc incliné"],n:"Face pull",bs:[2,2,2],br:["15"],a:"kg",b:"reps",rest:45,tip:"Léger : c'est pour la santé des épaules."}
 ],blocks:[
   {id:"bx_ropeB",n:"Corde · fractionné",u:"séries",rounds:[2,3,3],d:["8 × (20 s rapide au niveau 3, 20 s facile). 5 min faciles entre les séries : format du manuel pour la puissance aérobie.","8 × (20 s rapide, 20 s facile), 3 séries. 5 min faciles entre les séries.","10 × (20 s rapide, 20 s facile), 3 séries. 5 min faciles entre les séries."],iv:[{p:[["Rapide",20,"work"],["Facile",20,"easy"]],rep:8,rest:300,rl:"Récup : corde facile ou marche",rk:"easy"},{p:[["Rapide",20,"work"],["Facile",20,"easy"]],rep:8,rest:300,rl:"Récup : corde facile ou marche",rk:"easy"},{p:[["Rapide",20,"work"],["Facile",20,"easy"]],rep:10,rest:300,rl:"Récup : corde facile ou marche",rk:"easy"}]}
 ]};
 PROGRAM.bxs2={box:true,name:"Sac et jeu de jambes",short:"Sac 2",when:"À l'espace boxe de la salle. D'autres thèmes que mardi.",tips:SAC_TIPS,blocks:[
   cp(WARM,{id:"bx_warm2"}),
   {id:"bx_foot2",n:"Jeu de jambes",u:"exercices",rounds:[4],d:[FOOT_D],iv:[{p:[["#",120,"work"]],rest:30}],themes:[["Entrer et sortir en angle","Pivot puis 1-2","Changements de rythme : petits pas puis explosion","Recul en ligne puis pivot pour sortir"]],vs:FOOT_VIDS},
-  {id:"bx_bag2",n:"Sac",u:"rounds",rounds:[6,6,4],d:["Un thème par round. Technique propre avant la vitesse.","Rounds appuyés : chaque coup part de la jambe et de la hanche, sans perdre la garde.","Simulation de combat : alterne attaque, défense et déplacements comme face à un adversaire."],iv:[{p:[["#",180,"work"]],rest:60}],themes:[["Jab en avançant et en reculant","Double jab puis direct","Crochet du bras avant puis pivot","Uppercuts à courte distance, puis sortie","Feinte de jab puis direct","Round libre : bouge entre chaque enchaînement"],["Directs appuyés en avançant","Crochet-crochet appuyés, puis sortie en angle","Corps-tête appuyés, côté gauche puis côté droit","Uppercut-crochet appuyés","Jab, direct, crochet, direct, puis défense","Round libre : enchaînements appuyés"],["Boxe à distance : jab et sorties","Combat rapproché au corps","Changements de rythme","Tout donner, mains rapides"]],vs:SAC_VIDS},
+  {id:"bx_bag2",n:"Sac",sn:"Shadow (sac pris)",u:"rounds",rounds:[6,6,4],d:["Un thème par round. Technique propre avant la vitesse.","Rounds appuyés : chaque coup part de la jambe et de la hanche, sans perdre la garde.","Simulation de combat : alterne attaque, défense et déplacements comme face à un adversaire."],iv:[{p:[["#",180,"work"]],rest:60}],themes:[["Jab en avançant et en reculant","Double jab puis direct","Crochet du bras avant puis pivot","Uppercuts à courte distance, puis sortie","Feinte de jab puis direct","Round libre : bouge entre chaque enchaînement"],["Directs appuyés en avançant","Crochet-crochet appuyés, puis sortie en angle","Corps-tête appuyés, côté gauche puis côté droit","Uppercut-crochet appuyés","Jab, direct, crochet, direct, puis défense","Round libre : enchaînements appuyés"],["Boxe à distance : jab et sorties","Combat rapproché au corps","Changements de rythme","Tout donner, mains rapides"]],vs:SAC_VIDS},
   cp(KAM,{id:"bx_kam2"})
 ]};
 PROGRAM.bxc={box:true,name:"Vitesse, rounds de combat et gainage",short:"Vitesse",when:"Vitesse en début de séance, sans fatigue : arrête une série dès que ça ralentit.",blocks:[
@@ -491,6 +495,7 @@ function renderBoxExos(key,w){
     h+="<div class='exo' data-exo='"+exo.id+"'><div class='exo-head'><h3>"+esc(nm)+(today?" <span class='pill warn swap'>Aujourd’hui</span>":"")+"</h3><span class='target num'>"+p.n+" × "+esc(p.r)+"</span></div>";
     if(ui.editing===exo.id){
       h+="<div class='rename'><label class='inline' for='rename-"+exo.id+"'>Nouvel exercice<input id='rename-"+exo.id+"' value='"+esc(nm)+"' placeholder='Ex. : presse à cuisses'></label>";
+      if(exo.alt) h+="<div class='alts'><span class='label-like'>Alternatives (mêmes muscles) :</span>"+exo.alt.map(function(a){ return "<button type='button' class='alt"+(a===nm?" on":"")+"' data-act='alt-pick' data-alt='"+esc(a)+"'>"+esc(a)+"</button>"; }).join("")+"</div>";
       h+="<div class='rename-btns'><button type='button' class='btn small' data-act='rn-today'>Juste aujourd’hui</button><button type='button' class='btn small dark' data-act='rn-always'>Toujours</button><button type='button' class='btn ghost small' data-act='rn-cancel'>Annuler</button></div>";
       if(nm!==exo.n) h+="<button type='button' class='linkbtn' data-act='rn-reset'>Revenir à « "+esc(exo.n)+" »</button>";
       h+="</div>";
@@ -517,8 +522,11 @@ function renderBoxExos(key,w){
   });
   boxBlocks(key,w).forEach(function(b){
     var bi=boxBloc(w), r=d.rounds[b.id]||[], nr=roundsFor(key,b,w), th=b.themes?pickB(b.themes,bi):null;
-    h+="<div class='exo' data-block='"+b.id+"'><div class='exo-head'><h3>"+esc(b.n)+"</h3><span class='target num'>"+nr+" "+esc(b.u||"rounds")+"</span></div>";
+    var shad=!!(b.sn&&(d.shadow||{})[b.id]);
+    h+="<div class='exo' data-block='"+b.id+"'><div class='exo-head'><h3>"+esc(blockName(key,b))+"</h3><span class='target num'>"+nr+" "+esc(b.u||"rounds")+"</span></div>";
     h+="<div class='hint'>"+esc(pickB(b.d,bi))+"</div>";
+    if(shad) h+="<div class='banner'>Sac pris : mêmes thèmes en shadow, ou sur un sac mural ou une poire si la salle en a. En bloc 1, tu peux tenir des haltères de 0,5-1 kg.</div>";
+    if(b.sn) h+="<button type='button' class='linkbtn' data-act='shadow' data-block='"+b.id+"'>"+(shad?"Un sac s’est libéré : revenir au sac":"Sac pris : faire en shadow")+"</button>";
     if(th){ h+="<ol class='themes'>"; for(var t=0;t<nr;t++) h+="<li"+(r[t]?" class='ok'":"")+">"+esc(th[t%th.length])+"</li>"; h+="</ol>"; }
     if(b.vs) h+="<div class='vids'>"+b.vs.map(function(v){ return vidLink(v[1],v[0]); }).join("")+"</div>";
     if(b.iv){ var tot=seqTotal(key,b,w); h+="<button type='button' class='playbtn' data-act='play' data-block='"+b.id+"'>▶ Lancer le chrono · "+Math.round(tot/60)+" min</button>"; }
@@ -938,7 +946,7 @@ function renderHistory(){
     if(a.src==="sessions"){
       var day=PROGRAM[s.day]||{name:"Séance"}; title=day.name; tag=day.box?"Programme boxe":"Ancien programme";
       Object.keys(s.sets||{}).forEach(function(id){ var e=findExo(id); if(e&&s.sets[id].length) lines.push('<strong>'+esc(nameIn(s,e))+'</strong> '+s.sets[id].map(function(st){return esc(setStr(e,st));}).join(", ")); });
-      Object.keys(s.rounds||{}).forEach(function(id){ var bk=findBlock(id), arr=s.rounds[id]||[]; lines.push('<strong>'+esc(bk?bk.n:"Rounds")+'</strong> '+arr.filter(Boolean).length+' / '+(day.box||!bk?arr.length:bk.rounds)+' '+esc(bk&&bk.u||"rounds")); });
+      Object.keys(s.rounds||{}).forEach(function(id){ var bk=findBlock(id), arr=s.rounds[id]||[]; lines.push('<strong>'+esc(bk?((s.shadow||[]).indexOf(id)>=0&&bk.sn?bk.sn:bk.n):"Rounds")+'</strong> '+arr.filter(Boolean).length+' / '+(day.box||!bk?arr.length:bk.rounds)+' '+esc(bk&&bk.u||"rounds")); });
     } else if(a.src==="cardio"){
       title=s.type; tag="Cardio"; lines=extraHist(s);
     } else {
@@ -1073,12 +1081,13 @@ function buildSeq(key,b,w){
 }
 var player=null;
 var pel=document.createElement("div"); pel.className="player"; pel.id="player"; pel.hidden=true; document.body.appendChild(pel);
+function blockName(key,b){ var d=getDraft(key); return b.sn&&(d.shadow||{})[b.id]?b.sn:b.n; }
 function playerStart(key,bid){
   var b=findBlock(bid), w=boxWeekOf(sessionDate(key)); if(!b||!b.iv) return;
   audioUnlock(); clearInterval(timer.id); timer.left=0; updateTimer();
   var seq=buildSeq(key,b,w);
   seq.unshift({label:"Prépare-toi",sec:5,kind:"rest",round:0,ready:true});
-  player={key:key,bid:bid,name:b.n,seq:seq,i:-1,end:0,left:0,paused:false,pausedLeft:0,nr:roundsFor(key,b,w),u:b.u||"rounds",id:null,wake:null};
+  player={key:key,bid:bid,name:blockName(key,b),seq:seq,i:-1,end:0,left:0,paused:false,pausedLeft:0,nr:roundsFor(key,b,w),u:b.u||"rounds",id:null,wake:null};
   try{ if(navigator.wakeLock) navigator.wakeLock.request("screen").then(function(l){ if(player) player.wake=l; else l.release(); }).catch(function(){}); }catch(e){}
   pel.hidden=false; playerNext();
   player.id=setInterval(playerTick,200);
@@ -1167,6 +1176,8 @@ root.addEventListener("click",function(ev){
   if(b.dataset.act==="add-save"){ saveExtra(); return; }
   var act=b.dataset.act, K=curKey(), d=getDraft(K);
   if(act==="play"){ playerStart(K,b.dataset.block); return; }
+  if(act==="alt-pick"){ var ri=b.closest(".exo").querySelector(".rename input"); if(ri){ ri.value=b.dataset.alt; b.parentNode.querySelectorAll(".alt").forEach(function(x){ x.classList.toggle("on",x===b); }); } return; }
+  if(act==="shadow"){ d.shadow=d.shadow||{}; d.shadow[b.dataset.block]=!d.shadow[b.dataset.block]; saveDraft(K); render(); return; }
   if(act==="rec-ok"){ recoverPending(); return; }
   if(act==="rec-no"){ dismissPending(); return; }
   if(act==="snd-test"){ SND.go(); say("Test du son. Repos, une minute trente."); return; }
@@ -1305,6 +1316,7 @@ function saveSession(){
     var arr=(d.sets[e.id]||[]).slice(0,bxPlan(e,w).n).filter(function(st){return st&&st.done&&st.b!=null;}).map(function(st){ var o={b:st.b}; if(st.a!=null) o.a=st.a; return o; });
     if(arr.length){ s.sets[e.id]=arr; nSets++; var un=nameNow(e,d); if(un!==e.n){ s.names=s.names||{}; s.names[e.id]=un; } }
   }); }
+  bl.forEach(function(b){ if(b.sn&&(d.shadow||{})[b.id]){ s.shadow=s.shadow||[]; s.shadow.push(b.id); } });
   if(bl.length){ s.rounds={}; bl.forEach(function(b){ var nr=roundsFor(key,b,w), dr=d.rounds[b.id]||[]; s.rounds[b.id]=[]; for(var ri=0;ri<nr;ri++) s.rounds[b.id].push(!!dr[ri]); nRounds+=s.rounds[b.id].filter(Boolean).length; }); }
   if(!nSets&&!nRounds){ toast("Valide au moins une série ou un round avant d'enregistrer."); return; }
   state.sessions.push(s); state.sessions.sort(function(x,y){return x.date<y.date?-1:(x.date>y.date?1:0);});
